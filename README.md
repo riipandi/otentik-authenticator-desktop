@@ -1,13 +1,12 @@
-# Otentik Authenticator
-
-<p>
+<p align="center"><img src="./banner.svg" width="500" height="150" alt="Project Logo"></p>
+<p align="center">
     <a href="https://github.com/riipandi/otentik-authenticator-desktop/pulse">
         <img src="https://img.shields.io/badge/Contributions-welcome-blue.svg?style=flat-square" alt="Contribution welcome">
     </a>
     <a href="https://github.com/riipandi/otentik-authenticator-desktop">
         <img src="https://img.shields.io/github/languages/top/riipandi/otentik-authenticator-desktop?style=flat-square" alt="Top language">
     </a>
-    <a href="https://aris.mit-license.org">
+    <a href="https://choosealicense.com/licenses/apache-2.0">
         <img src="https://img.shields.io/github/license/riipandi/otentik-authenticator-desktop?style=flat-square" alt="License">
     </a>
     <a href="https://github.com/sponsors/riipandi">
@@ -15,9 +14,9 @@
     </a>
 </p>
 
-<hr/>
+## Introduction
 
-Open Source two factor authenticator.
+Otentik is a secure app to manage your 2-step verification tokens for your online services.
 
 ## Security Issue
 
@@ -27,7 +26,7 @@ instead of using the issue tracker.
 ## Contributing
 
 Thank you for considering contributing to this project! If you want to start contributing or discover a security
-ulnerability within Wasta, please send me a direct message on [Twitter](https://s.id/dmaris).
+vulnerability within Otentik Authenticator, please send me a direct message on [Twitter](https://s.id/dmaris).
 
 ## Thanks to...
 
