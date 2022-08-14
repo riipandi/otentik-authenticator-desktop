@@ -1,0 +1,33 @@
+{
+    "name": "@otentik/authenticator-desktop",
+    "description": "Open Source two factor authenticator",
+    "license": "Apache-2.0",
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "build:mac:arm": "tauri build --target aarch64-apple-darwin",
+        "build:mac:x64": "tauri build --target x86_64-apple-darwin",
+        "preview": "vite preview",
+        "tauri": "tauri"
+    },
+    "dependencies": {
+        "@tauri-apps/api": "^1.0.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#ce109ff53b43f036ea39cdc3f7c44d582f910270"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.2",
+        "@tauri-apps/cli": "^1.0.5",
+        "@types/react": "^18.0.17",
+        "@types/react-dom": "^18.0.6",
+        "@vitejs/plugin-react": "^2.0.1",
+        "autoprefixer": "^10.4.8",
+        "postcss": "^8.4.16",
+        "tailwindcss": "^3.1.8",
+        "typescript": "^4.7.4",
+        "vite": "^3.0.7"
+    }
+}
