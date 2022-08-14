@@ -1,22 +1,15 @@
-import { useState } from 'react'
+import { SearchBar } from './components/SearchBar'
+import { ItemsList } from './components/ItemsList'
+import { MenuButton } from './components/MenuButton'
 
 function App() {
-    const [count, setCount] = useState(0)
-
-    const handleClick = () => {
-        setCount((count) => count + 1)
-    }
-
     return (
-        <div className='b'>
-            <h1>Otentik Authenticator</h1>
-            <button
-                type='button'
-                className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
-                onClick={handleClick}
-            >
-                count is {count}
-            </button>
+        <div className='pt-16'>
+            <MenuButton />
+            <SearchBar />
+            <div className='pt-14 overscroll-auto overflow-y-auto relative p-0 h-[514px] scrollbar-hide bg-gray-50 dark:bg-gray-900'>
+                <ItemsList />
+            </div>
         </div>
     )
 }

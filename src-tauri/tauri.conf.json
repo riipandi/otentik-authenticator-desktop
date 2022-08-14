@@ -59,8 +59,12 @@
     },
     "windows": [
       {
+        "visible": false,
+        "alwaysOnTop": true,
         "title": "Authenticator",
+        "skipTaskbar": true,
         "fullscreen": false,
+        "maximized": false,
         "resizable": false,
         "height": 580,
         "width": 360

@@ -18,6 +18,8 @@
 
 Otentik is a secure app to manage your 2-step verification tokens for your online services.
 
+This project is an Open Source project for contributing to [The Supabase Open Source Hackathon](https://supabase.com/blog/launch-week-5-hackathon).
+
 ## Security Issue
 
 If you discover any security-related issues, please send an e-mail to [aris@duck.com](mailto:aris@duck.com)

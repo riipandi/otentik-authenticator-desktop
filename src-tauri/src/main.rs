@@ -7,16 +7,19 @@ use tauri::{Manager, Runtime, Window};
 use tauri::{SystemTray, SystemTrayEvent};
 use tauri_plugin_store::PluginBuilder;
 mod menu;
+// mod tray_menu;
 
 fn main() {
+    // let system_tray = SystemTray::new().with_menu(tray_menu::tray_menu());
     let system_tray = SystemTray::new();
-    tauri::Builder::default()
-        // .plugin(tauri_plugin_window_state::Builder::default().build())
+    let app = tauri::Builder::default();
+
+    app
         .plugin(PluginBuilder::default().build())
         .menu(menu::menu())
         .setup(|app| {
             let win = app.get_window("main").unwrap();
-            win.set_transparent_titlebar(false, false);
+            win.set_transparent_titlebar(true, true);
             // Listen for update messages
             win.listen("tauri://update-status".to_string(), move |msg| {
                 println!("New status: {:?}", msg);
@@ -26,35 +29,36 @@ fn main() {
         .system_tray(system_tray)
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::LeftClick { .. } => {
-                let win = app.get_window("main").unwrap();
-                if win.is_visible().unwrap() {
-                    win.hide().unwrap();
+                let main_window = app.get_window("main").unwrap();
+                if main_window.is_visible().unwrap() {
+                    main_window.hide().unwrap();
                 } else {
-                    // win.hide().unwrap();
-                    win.set_focus().unwrap();
+                    main_window.set_focus().unwrap();
                 }
             }
-            SystemTrayEvent::RightClick {
-                position: _,
-                size: _,
-                ..
-            } => {
+            SystemTrayEvent::RightClick { position: _, size: _, .. } => {
                 println!("system tray received a right click");
             }
-            SystemTrayEvent::DoubleClick {
-                position: _,
-                size: _,
-                ..
-            } => {
-                println!("system tray received a double click");
-            }
-            SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-                "quit" => {
-                    std::process::exit(0);
+            SystemTrayEvent::MenuItemClick { id, .. } => {
+                let item_handle = app.tray_handle().get_item(&id);
+                match id.as_str() {
+                "open" => {
+                    let main_window = app.get_window("main").unwrap();
+                    if main_window.is_visible().unwrap() {
+                        main_window.hide().unwrap();
+                        item_handle.set_title("Open Authenticator").unwrap();
+                    } else {
+                        main_window.set_focus().unwrap();
+                        item_handle.set_title("Hide Authenticator").unwrap();
+                    }
                 }
-                "hide" => {}
+                "hide" => {
+                    let main_window = app.get_window("main").unwrap();
+                    main_window.hide().unwrap();
+                }
+                "quit" => { std::process::exit(0); }
                 _ => {}
-            },
+            }},
             _ => {}
         })
         .run(tauri::generate_context!())
