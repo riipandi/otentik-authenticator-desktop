@@ -13,10 +13,12 @@
         "tauri": "tauri"
     },
     "dependencies": {
+        "@headlessui/react": "^1.6.6",
         "@tauri-apps/api": "^1.0.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#ce109ff53b43f036ea39cdc3f7c44d582f910270"
+        "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#ce109ff53b43f036ea39cdc3f7c44d582f910270",
+        "zustand": "^4.0.0"
     },
     "devDependencies": {
         "@heroicons/react": "^1.0.6",

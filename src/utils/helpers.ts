@@ -6,3 +6,7 @@ export const getInitials = (fullName: string): string => {
     })
     return initials.join('')
 }
+
+export function classNames(...classes: any[]) {
+    return classes.filter(Boolean).join(' ')
+}

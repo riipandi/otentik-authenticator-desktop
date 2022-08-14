@@ -16,5 +16,5 @@
 
 /* Custom titlebar */
 .titlebar {
-    @apply h-14 bg-gray-900 py-3 px-4 flex justify-between fixed top-0 left-0 right-0 z-30 max-w-sm mx-auto;
+    @apply h-14 bg-gray-900 py-3 px-4 flex justify-between fixed top-0 left-0 right-0 z-40 max-w-sm mx-auto;
 }
