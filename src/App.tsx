@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-import { Session } from '@supabase/supabase-js'
-import { sbClient } from './utils/supabase'
+import { useAuth } from './hooks/useAuth'
 
 import { AppMenu } from './components/AppMenu'
 import { ItemsList } from './components/ItemsList'
@@ -8,24 +6,8 @@ import { LockScreen } from './components/LockScreen'
 import { LoginScreen } from './components/LoginScreen'
 import { SearchBar } from './components/SearchBar'
 
-interface UserProps {
-    user: any
-}
-
 function App() {
-    const [session, setSession] = useState<Session | null>(null)
-
-    useEffect(() => {
-        setSession(sbClient.auth.session())
-
-        const { data: authListener } = sbClient.auth.onAuthStateChange(async (_event, session) => {
-            setSession(session)
-        })
-
-        return () => {
-            authListener?.unsubscribe()
-        }
-    }, [session])
+    const session = useAuth()
 
     return (
         <div className='pt-16'>

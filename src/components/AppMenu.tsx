@@ -1,16 +1,30 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { LockClosedIcon, CogIcon, LogoutIcon, DocumentAddIcon } from '@heroicons/react/outline'
+import { LockClosedIcon, CogIcon, LogoutIcon, DocumentAddIcon, XCircleIcon } from '@heroicons/react/outline'
 import { MenuIcon } from '@heroicons/react/solid'
 import { appWindow } from '@tauri-apps/api/window'
 
 import { classNames } from '../utils/helpers'
+import { sbClient } from '../utils/supabase'
 import { useStore } from '../stores/screenLockStore'
 import { MenuDivider } from './MenuDivider'
+
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
 export const AppMenu = () => {
     const locked = useStore((state) => state.locked)
     const setLockStreenState = useStore((state) => state.setLockStreenState)
+
+    const handleQuit = async () => {
+        setLockStreenState(true)
+        // wait for screen locked before quitting
+        await delay(1000)
+        appWindow.close()
+    }
+
+    const handleSignOut = () => {
+        sbClient.auth.signOut().catch(console.error)
+    }
 
     return (
         <div className='absolute top-0 right-0 z-40 h-14 flex items-center px-4'>
@@ -34,8 +48,8 @@ export const AppMenu = () => {
                             <>
                                 <Menu.Item>
                                     {({ active }) => (
-                                        <a
-                                            href='#'
+                                        <button
+                                            type='button'
                                             className={classNames(
                                                 active ? 'bg-gray-100 dark:bg-gray-500' : '',
                                                 'px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium rounded-t inline-flex items-center w-full justify-between'
@@ -43,14 +57,14 @@ export const AppMenu = () => {
                                         >
                                             <span>Add new item</span>
                                             <DocumentAddIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
-                                        </a>
+                                        </button>
                                     )}
                                 </Menu.Item>
                                 <MenuDivider />
                                 <Menu.Item>
                                     {({ active }) => (
-                                        <a
-                                            href='#'
+                                        <button
+                                            type='button'
                                             className={classNames(
                                                 active ? 'bg-gray-100 dark:bg-gray-500' : '',
                                                 'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium justify-between'
@@ -58,13 +72,13 @@ export const AppMenu = () => {
                                         >
                                             <span>Preferences</span>
                                             <CogIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
-                                        </a>
+                                        </button>
                                     )}
                                 </Menu.Item>
                                 <Menu.Item>
                                     {({ active }) => (
-                                        <a
-                                            href='#'
+                                        <button
+                                            type='button'
                                             className={classNames(
                                                 active ? 'bg-gray-100 dark:bg-gray-500' : '',
                                                 'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium justify-between'
@@ -73,7 +87,7 @@ export const AppMenu = () => {
                                         >
                                             <span>Lock Vault</span>
                                             <LockClosedIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
-                                        </a>
+                                        </button>
                                     )}
                                 </Menu.Item>
                                 <MenuDivider />
@@ -81,17 +95,33 @@ export const AppMenu = () => {
                         )}
                         <Menu.Item>
                             {({ active }) => (
-                                <a
-                                    href='#'
+                                <button
+                                    type='button'
                                     className={classNames(
                                         active ? 'bg-gray-100 dark:bg-gray-500' : '',
                                         'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium rounded-b justify-between'
                                     )}
-                                    onClick={() => appWindow.close()}
+                                    onClick={handleSignOut}
+                                >
+                                    <span>Sign out</span>
+                                    <LogoutIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                </button>
+                            )}
+                        </Menu.Item>
+                        <MenuDivider />
+                        <Menu.Item>
+                            {({ active }) => (
+                                <button
+                                    type='button'
+                                    className={classNames(
+                                        active ? 'bg-gray-100 dark:bg-gray-500' : '',
+                                        'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium rounded-b justify-between'
+                                    )}
+                                    onClick={handleQuit}
                                 >
                                     <span>Quit</span>
-                                    <LogoutIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
-                                </a>
+                                    <XCircleIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                </button>
                             )}
                         </Menu.Item>
                     </Menu.Items>

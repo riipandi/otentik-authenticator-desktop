@@ -59,7 +59,7 @@
     },
     "windows": [
       {
-        "visible": false,
+        "visible": true,
         "alwaysOnTop": true,
         "title": "Authenticator",
         "skipTaskbar": true,

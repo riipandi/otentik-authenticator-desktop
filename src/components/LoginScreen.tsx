@@ -1,26 +1,41 @@
 import { useState } from 'react'
-import { LoginIcon } from '@heroicons/react/outline'
+import { ArrowSmRightIcon } from '@heroicons/react/solid'
 import { sbClient } from '../utils/supabase'
+import { LoaderScreen } from './LoaderScreen'
 
 export const LoginScreen = () => {
+    const [loading, setLoading] = useState(false)
+    const [actionIsLogin, setActionIsLogin] = useState(true)
     const [error, setError] = useState<any>({ error: null, text: null })
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setLoading(true)
 
-        const { user, error } = await sbClient.auth.signIn({ email, password })
+        const { user, error } = actionIsLogin
+            ? await sbClient.auth.signIn({ email, password })
+            : await sbClient.auth.signUp({ email, password })
 
         if (error) {
             setError({ error: true, text: error.message })
+        } else if (!actionIsLogin && user) {
+            setError({
+                error: true,
+                text: 'User already exists. Please login instead.',
+            })
         } else if (!user && !error) {
             setError({
                 error: false,
                 text: 'An email has been sent to you for verification!',
             })
         }
+
+        setLoading(false)
     }
+
+    if (loading) return <LoaderScreen />
 
     return (
         <div className='min-h-full flex items-center justify-center py-12 px-6 lg:px-4'>
@@ -28,7 +43,7 @@ export const LoginScreen = () => {
                 <div>
                     <img className='mx-auto h-12 w-auto' src='/app-logo-wide.svg' alt='Authenticator' />
                     <h2 className='mt-6 text-center text-xl tracking-tight font-semibold text-white'>
-                        Sign in to continue
+                        {actionIsLogin ? 'Sign in to continue' : 'Create account'}
                     </h2>
                 </div>
                 {error && (
@@ -37,7 +52,7 @@ export const LoginScreen = () => {
                     </div>
                 )}
 
-                <form className='mt-8 space-y-6' onSubmit={handleLogin}>
+                <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
                     <input type='hidden' name='remember' defaultValue='true' />
                     <div className='rounded-md shadow-sm -space-y-px'>
                         <div>
@@ -77,8 +92,8 @@ export const LoginScreen = () => {
                             type='submit'
                             className='group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold uppercase rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
                         >
-                            <span>Sign in</span>
-                            <LoginIcon className='h-5 w-5 text-primary-100 group-hover:text-primary-200 ml-2 -mr-1' />
+                            <span>Continue</span>
+                            <ArrowSmRightIcon className='h-5 w-5 text-primary-100 group-hover:text-primary-200 ml-2 -mr-1' />
                         </button>
                     </div>
                 </form>
@@ -96,14 +111,13 @@ export const LoginScreen = () => {
                         </a>
                     </p>
                     <p className='text-center text-sm text-gray-300'>
-                        Dont&rsquo;t have account?{' '}
+                        {actionIsLogin ? "Dont' have account? " : 'Already have account? '}
                         <a
-                            href='https://otentik.app/signup?ref=authenticator'
+                            href='#'
                             className='font-medium text-primary-500 hover:text-primary-600'
-                            rel='noreferrer noopener'
-                            target='_blank'
+                            onClick={() => setActionIsLogin(!actionIsLogin)}
                         >
-                            Register
+                            {actionIsLogin ? 'Register' : 'Login'}
                         </a>
                     </p>
                 </div>
