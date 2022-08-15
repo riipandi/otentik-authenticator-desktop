@@ -19,13 +19,13 @@ export const ItemsList = () => {
                                 <div className='group relative flex items-center space-x-3 px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 hover:bg-primary-50 dark:hover:bg-gray-800'>
                                     <button
                                         type='button'
-                                        className='relative flex-shrink-0 rounded-lg'
+                                        className='relative flex-shrink-0 cursor-pointer rounded-lg'
                                         onClick={() => {
                                             clipboard.write(item.token)
                                             toast.success('Token copied to clipboard!')
                                         }}
                                     >
-                                        <div className='absolute z-20 h-10 w-20 cursor-pointer rounded-lg bg-white/30 backdrop-blur-sm transition delay-150 duration-150 ease-in-out group-hover:bg-transparent group-hover:backdrop-blur-none' />
+                                        <div className='backdrop-blur-xs absolute z-20 h-10 w-20 cursor-pointer rounded-lg bg-white/30 transition delay-150 duration-150 ease-in-out group-hover:bg-transparent group-hover:backdrop-blur-none' />
                                         <div className='inline-flex h-10 w-20 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 transition delay-150 duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-110'>
                                             <span className='font-mono text-sm font-bold leading-none tracking-tighter text-white'>
                                                 {item.token}

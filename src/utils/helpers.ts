@@ -10,6 +10,7 @@ export const getInitials = (fullName: string): string => {
 }
 
 // Generate TOTP token from secret using Rust.
+// https://tauri.app/v1/guides/features/command/
 export const generateTOTP = async (secret: string): Promise<any> => {
     return invoke('generate_totp', { secret, period: 30, digits: 6 })
     // .then((token) =>  console.log(token))

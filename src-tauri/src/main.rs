@@ -22,10 +22,17 @@ fn main() {
         .setup(|app| {
             let win = app.get_window("main").unwrap();
             win.set_transparent_titlebar(true, true);
+
+            // only include this code on debug builds
+            #[cfg(debug_assertions)] {
+                win.open_devtools();
+            }
+
             // Listen for update messages
             win.listen("tauri://update-status".to_string(), move |msg| {
                 println!("New status: {:?}", msg);
             });
+
             Ok(())
         })
         .system_tray(system_tray)

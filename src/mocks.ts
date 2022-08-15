@@ -24,6 +24,6 @@ const generateMock = async (count: number): Promise<any> => {
 
 export const vault = {
     A: await generateMock(faker.datatype.number({ min: 3, max: 4 })),
-    // B: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
-    // C: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
+    B: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
+    C: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
 }
