@@ -46,7 +46,7 @@ function App() {
     const session = useAuth()
 
     // Keyboard shortcut for open debugging tools
-    useHotkeys('cmd+alt+j', () => console.log('FUCK'))
+    useHotkeys('cmd+alt+j', () => console.log('Open DevTools'))
     useHotkeys('ctrl+k, command+k', () => console.log('KEYBOARD SHORTCUT CHEATSHEETS'))
 
     useEffect(() => {

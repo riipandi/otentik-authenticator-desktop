@@ -1,39 +1,29 @@
 import { faker } from '@faker-js/faker'
-// import * as OTPAuth from 'otpauth'
+import { generateTOTP } from './utils/helpers'
 
-const generateMock = (count: number): any => {
+const generateMock = async (count: number): Promise<any> => {
     const result = []
 
     for (let i = 0; i < count; i++) {
         const id = faker.datatype.uuid()
         const issuer = faker.internet.domainName()
         const userId = faker.internet.email().toLowerCase()
-        // const secret = OTPAuth.Secret.fromBase32(`NB2W45DFOIZ${i}`)
-        const secret = `NB2W45DFOIZ${i}`
-        const algorithm = 'SHA1'
+        const secret = faker.random.alphaNumeric(40)
+        const algorithm = 'sha1'
         const tokenType = 'TOTP'
         const period = 30
+        const digits = 6
 
         // Create a new TOTP object.
-        // let otp = new OTPAuth.TOTP({
-        //     label: issuer,
-        //     digits: 6,
-        //     issuer,
-        //     algorithm,
-        //     period,
-        //     secret,
-        // })
+        const token = await generateTOTP(secret)
 
-        // const token = otp.generate()
-        const token = `12345${i}`
-
-        result.push({ id, issuer, userId, token, secret, algorithm, tokenType, period })
+        result.push({ id, issuer, userId, token, secret, algorithm, tokenType, period, digits })
     }
     return result
 }
 
 export const vault = {
-    A: generateMock(faker.datatype.number({ min: 3, max: 4 })),
-    // B: generateMock(faker.datatype.number({ min: 1, max: 4 })),
-    // C: generateMock(faker.datatype.number({ min: 1, max: 4 })),
+    A: await generateMock(faker.datatype.number({ min: 3, max: 4 })),
+    // B: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
+    // C: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
 }

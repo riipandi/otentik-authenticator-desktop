@@ -21,6 +21,7 @@ tauri = { version = "1.0.5", features = ["api-all", "system-tray"] }
 cocoa = "0.24.0"
 window-vibrancy = "0.1.1"
 window-shadows = "0.1.2"
+totp-rs = "^3.0"
 
 [dependencies.tauri-plugin-store]
 git = "https://github.com/tauri-apps/tauri-plugin-store"

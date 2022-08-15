@@ -1,3 +1,5 @@
+import { invoke } from '@tauri-apps/api/tauri'
+
 // Get initial from full name for avatar.
 export const getInitials = (fullName: string): string => {
     const nameArr = fullName.split('')
@@ -5,6 +7,13 @@ export const getInitials = (fullName: string): string => {
         return /[A-Z]/.test(char)
     })
     return initials.join('')
+}
+
+// Generate TOTP token from secret using Rust.
+export const generateTOTP = async (secret: string): Promise<any> => {
+    return invoke('generate_totp', { secret, period: 30, digits: 6 })
+    // .then((token) =>  console.log(token))
+    // .catch((error) => console.error(error))
 }
 
 // Split number to array of number.
