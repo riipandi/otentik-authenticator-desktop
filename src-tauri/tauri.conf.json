@@ -1,74 +1,76 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
-  "build": {
-    "beforeBuildCommand": "yarn build",
-    "beforeDevCommand": "yarn dev",
-    "devPath": "http://localhost:5173",
-    "distDir": "../dist"
-  },
-  "package": {
-    "productName": "Authenticator",
-    "version": "0.1.0"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": true
+    "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+    "build": {
+        "beforeBuildCommand": "yarn build",
+        "beforeDevCommand": "yarn dev",
+        "devPath": "http://localhost:5173",
+        "distDir": "../dist"
     },
-    "systemTray": {
-      "iconPath": "icons/tray-256.png",
-      "iconAsTemplate": true
+    "package": {
+        "productName": "Authenticator",
+        "version": "0.1.0"
     },
-    "bundle": {
-      "active": true,
-      "category": "Utility",
-      "copyright": "",
-      "deb": {
-        "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32.png",
-        "icons/128.png",
-        "icons/256.png",
-        "icons/1024.ico",
-        "icons/1024.icns"
-      ],
-      "identifier": "app.otentik.authenticator",
-      "longDescription": "Open Source two factor authenticator",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "Open Source two factor authenticator",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
-    "windows": [
-      {
-        "visible": true,
-        "alwaysOnTop": true,
-        "title": "Authenticator",
-        "skipTaskbar": true,
-        "fullscreen": false,
-        "maximized": false,
-        "resizable": false,
-        "height": 586,
-        "width": 360
-      }
-    ]
-  }
+    "tauri": {
+        "allowlist": {
+            "all": true,
+            "http": {
+                "all": true,
+                "request": true,
+                "scope": [
+                    "https://api.github.com/repos/riipandi/otentik-authenticator-desktop/*",
+                    "https://gxuxlaprbhycqtqendpl.supabase.co/*"
+                ]
+            }
+        },
+        "systemTray": {
+            "iconPath": "icons/tray-256.png",
+            "iconAsTemplate": true
+        },
+        "bundle": {
+            "active": true,
+            "category": "Utility",
+            "copyright": "",
+            "deb": {
+                "depends": []
+            },
+            "externalBin": [],
+            "icon": ["icons/32.png", "icons/128.png", "icons/256.png", "icons/1024.ico", "icons/1024.icns"],
+            "identifier": "app.otentik.authenticator",
+            "longDescription": "Open Source two factor authenticator",
+            "macOS": {
+                "entitlements": null,
+                "exceptionDomain": "",
+                "frameworks": [],
+                "providerShortName": null,
+                "signingIdentity": null
+            },
+            "resources": [],
+            "shortDescription": "Open Source two factor authenticator",
+            "targets": "all",
+            "windows": {
+                "certificateThumbprint": null,
+                "digestAlgorithm": "sha256",
+                "timestampUrl": ""
+            }
+        },
+        "security": {
+            "csp": null
+        },
+        "updater": {
+            "active": false
+        },
+        "windows": [
+            {
+                "visible": true,
+                "alwaysOnTop": true,
+                "title": "Authenticator",
+                "skipTaskbar": true,
+                "fullscreen": false,
+                "maximized": false,
+                "resizable": false,
+                "height": 586,
+                "width": 360
+            }
+        ]
+    }
 }

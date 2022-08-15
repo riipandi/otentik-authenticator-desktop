@@ -26,7 +26,7 @@ export const LockScreen = () => {
     const handleUnlockAction = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!passphrase) {
+        if (passphrase.length <= 1) {
             return setError({ error: true, text: 'Passphrase required!' })
         }
 
@@ -48,7 +48,12 @@ export const LockScreen = () => {
 
     return (
         <Transition.Root show={locked} as={Fragment}>
-            <Dialog as='div' className='relative z-20' static onClose={() => null}>
+            <Dialog
+                as='div'
+                className={classNames(locked ? 'relative' : 'hidden', 'z-20')}
+                static
+                onClose={() => null}
+            >
                 <Transition.Child
                     as={Fragment}
                     enter='ease-out duration-300'

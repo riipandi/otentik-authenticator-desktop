@@ -1,12 +1,15 @@
+import { useEffect } from 'react'
 import { appWindow } from '@tauri-apps/api/window'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { useAuth } from './hooks/useAuth'
 import { AppMenu } from './components/AppMenu'
-import { ItemsList } from './components/ItemsList'
 import { LockScreen } from './components/LockScreen'
 import { LoginScreen } from './components/LoginScreen'
 import { SearchBar } from './components/SearchBar'
 import { XCircleIcon } from '@heroicons/react/outline'
+import { disableBrowserEvents } from './utils/helpers'
+import { ItemsList } from './components/ItemsList'
 // import { EmptyState } from './components/EmptyState'
 
 const AuthScreen = () => (
@@ -32,7 +35,7 @@ const MainScreen = () => (
         <AppMenu />
         <LockScreen />
         <SearchBar />
-        <div className='relative z-0 -mx-1 h-[520px] overflow-y-auto overscroll-auto bg-gray-50 p-0 pt-14 scrollbar-hide dark:bg-gray-900'>
+        <div className='relative -mx-1 h-[520px] overflow-y-auto overscroll-auto bg-gray-50 p-0 pt-14 scrollbar-hide dark:bg-gray-900'>
             {/* <EmptyState /> */}
             <ItemsList />
         </div>
@@ -41,6 +44,24 @@ const MainScreen = () => (
 
 function App() {
     const session = useAuth()
+
+    // Keyboard shortcut for open debugging tools
+    useHotkeys('cmd+alt+j', () => console.log('FUCK'))
+    useHotkeys('ctrl+k, command+k', () => console.log('KEYBOARD SHORTCUT CHEATSHEETS'))
+
+    useEffect(() => {
+        // disableBrowserEvents('contextmenu')
+        // disableBrowserEvents('selectstart')
+
+        const fetchData = async () => {
+            if (session) {
+                await appWindow.emit('window-loaded', { loggedIn: true, token: session.access_token })
+            }
+        }
+
+        fetchData().catch(console.error)
+    }, [session])
+
     return <div className='pt-16'>{!session ? <AuthScreen /> : <MainScreen />}</div>
 }
 

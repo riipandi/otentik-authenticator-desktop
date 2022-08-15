@@ -3,6 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { LockClosedIcon, CogIcon, LogoutIcon, DocumentAddIcon, XCircleIcon } from '@heroicons/react/outline'
 import { MenuIcon } from '@heroicons/react/solid'
 import { appWindow } from '@tauri-apps/api/window'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { classNames } from '../utils/helpers'
 import { sbClient } from '../utils/supabase'
@@ -25,6 +26,9 @@ export const AppMenu = () => {
     const handleSignOut = () => {
         sbClient.auth.signOut().catch(console.error)
     }
+
+    // Keyboard shortcut for lock screen
+    useHotkeys('ctrl+l, command+l', () => setLockStreenState(true))
 
     return (
         <div className='absolute top-0 right-0 z-40 flex h-14 items-center px-4'>
