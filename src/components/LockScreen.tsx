@@ -58,11 +58,11 @@ export const LockScreen = () => {
                     leaveFrom='opacity-100'
                     leaveTo='opacity-0'
                 >
-                    <div className='fixed inset-0 backdrop-blur-sm bg-black/80 transition-opacity mt-12' />
+                    <div className='fixed inset-0 mt-12 bg-black/80 backdrop-blur-sm transition-opacity' />
                 </Transition.Child>
 
-                <div className='fixed z-20 inset-0 overflow-hidden'>
-                    <div className='flex items-center justify-center min-h-full p-6 text-center'>
+                <div className='fixed inset-0 z-20 overflow-hidden'>
+                    <div className='flex min-h-full items-center justify-center p-6 text-center'>
                         <Transition.Child
                             as={Fragment}
                             enter='ease-out duration-300'
@@ -72,10 +72,10 @@ export const LockScreen = () => {
                             leaveFrom='opacity-100 translate-y-0 sm:scale-100'
                             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
                         >
-                            <Dialog.Panel className='relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full sm:p-6'>
+                            <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6'>
                                 <form onSubmit={handleUnlockAction}>
                                     <div>
-                                        <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100'>
+                                        <div className='mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100'>
                                             <LockClosedIcon
                                                 className='h-6 w-6 text-red-600'
                                                 aria-hidden='true'
@@ -84,7 +84,7 @@ export const LockScreen = () => {
                                         <div className='mt-3 text-center sm:mt-5'>
                                             <Dialog.Title
                                                 as='h3'
-                                                className='text-lg leading-6 font-medium text-gray-900'
+                                                className='text-lg font-medium leading-6 text-gray-900'
                                             >
                                                 Vault locked
                                             </Dialog.Title>
@@ -98,15 +98,15 @@ export const LockScreen = () => {
                                                 <label htmlFor='passphrase' className='sr-only'>
                                                     Passphrase
                                                 </label>
-                                                <div className='mt-1 relative rounded-md shadow-sm'>
+                                                <div className='relative mt-1 rounded-md shadow-sm'>
                                                     <input
                                                         type={inputType}
                                                         name='passphrase'
                                                         id='passphrase'
                                                         className={classNames(
                                                             error &&
-                                                                'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 ',
-                                                            'block w-full pr-10 focus:outline-none sm:text-sm rounded-md'
+                                                                'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500 ',
+                                                            'block w-full rounded-md pr-10 focus:outline-none sm:text-sm'
                                                         )}
                                                         onChange={(e) => {
                                                             setError(null)
@@ -116,14 +116,14 @@ export const LockScreen = () => {
                                                     />
 
                                                     {error ? (
-                                                        <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
+                                                        <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
                                                             <ExclamationCircleIcon
                                                                 className='h-5 w-5 text-red-500'
                                                                 aria-hidden='true'
                                                             />
                                                         </div>
                                                     ) : (
-                                                        <div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
+                                                        <div className='absolute inset-y-0 right-0 flex items-center pr-3'>
                                                             {inputType === 'password' ? (
                                                                 <EyeOffIcon
                                                                     className='h-5 w-5 text-gray-400'
@@ -149,7 +149,7 @@ export const LockScreen = () => {
                                     <div className='mt-5'>
                                         <button
                                             type='submit'
-                                            className='inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:text-sm'
+                                            className='inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:text-sm'
                                         >
                                             Unlock vault
                                         </button>

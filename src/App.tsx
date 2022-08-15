@@ -7,17 +7,18 @@ import { LockScreen } from './components/LockScreen'
 import { LoginScreen } from './components/LoginScreen'
 import { SearchBar } from './components/SearchBar'
 import { XCircleIcon } from '@heroicons/react/outline'
+// import { EmptyState } from './components/EmptyState'
 
 const AuthScreen = () => (
     <>
-        <div className='absolute top-0 right-0 z-40 h-14 flex items-center px-4'>
+        <div className='absolute top-0 right-0 z-40 flex h-14 items-center px-4'>
             <div className='relative'>
                 <div>
                     <button
-                        className='hover:bg-gray-700 p-1.5 items-center justify-center flex -mr-1 rounded-md cursor-pointer outline-none'
+                        className='-mr-1 flex cursor-pointer items-center justify-center rounded-md p-1.5 outline-none hover:bg-gray-700'
                         onClick={() => appWindow.close()}
                     >
-                        <XCircleIcon className='w-6 h-6 text-white' />
+                        <XCircleIcon className='h-6 w-6 text-white' />
                     </button>
                 </div>
             </div>
@@ -31,7 +32,8 @@ const MainScreen = () => (
         <AppMenu />
         <LockScreen />
         <SearchBar />
-        <div className='pt-14 overscroll-auto overflow-y-auto relative p-0 h-[514px] scrollbar-hide bg-gray-50 dark:bg-gray-900 z-0'>
+        <div className='relative z-0 -mx-1 h-[520px] overflow-y-auto overscroll-auto bg-gray-50 p-0 pt-14 scrollbar-hide dark:bg-gray-900'>
+            {/* <EmptyState /> */}
             <ItemsList />
         </div>
     </>

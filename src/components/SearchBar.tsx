@@ -2,15 +2,15 @@ import { SearchIcon } from '@heroicons/react/outline'
 
 export const SearchBar = () => {
     return (
-        <div className='-mt-1 bg-gray-900 pb-5 px-4 flex justify-between fixed left-0 right-0 z-10 max-w-sm mx-auto'>
+        <div className='fixed left-0 right-0 z-10 mx-auto -mt-1 flex max-w-sm justify-between bg-gray-900 px-4 pb-5'>
             <div className='relative w-full'>
-                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                     <SearchIcon className='h-5 w-5 text-gray-400' />
                 </div>
                 <input
                     id='search'
                     name='search'
-                    className='block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-800 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-gray-700 focus:border-gray-700 focus:ring-gray-700 focus:text-gray-100 sm:text-sm'
+                    className='block w-full rounded-md border border-transparent bg-gray-800 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-gray-700 focus:bg-gray-700 focus:text-gray-100 focus:outline-none focus:ring-gray-700 sm:text-sm'
                     placeholder='Search'
                     type='search'
                 />

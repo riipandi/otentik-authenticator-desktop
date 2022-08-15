@@ -38,23 +38,23 @@ export const LoginScreen = () => {
     if (loading) return <LoaderScreen />
 
     return (
-        <div className='min-h-full flex items-center justify-center py-12 px-6 lg:px-4'>
-            <div className='max-w-sm w-full'>
+        <div className='flex min-h-full items-center justify-center py-12 px-6 lg:px-4'>
+            <div className='w-full max-w-sm'>
                 <div>
                     <img className='mx-auto h-12 w-auto' src='/app-logo-wide.svg' alt='Authenticator' />
-                    <h2 className='mt-6 text-center text-xl tracking-tight font-semibold text-white'>
+                    <h2 className='mt-6 text-center text-xl font-semibold tracking-tight text-white'>
                         {actionIsLogin ? 'Sign in to continue' : 'Create account'}
                     </h2>
                 </div>
                 {error && (
                     <div className='mt-6 -mb-4'>
-                        <p className='text-sm text-red-500 text-center font-medium'>{error.text}</p>
+                        <p className='text-center text-sm font-medium text-red-500'>{error.text}</p>
                     </div>
                 )}
 
                 <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
                     <input type='hidden' name='remember' defaultValue='true' />
-                    <div className='rounded-md shadow-sm -space-y-px'>
+                    <div className='-space-y-px rounded-md shadow-sm'>
                         <div>
                             <label htmlFor='email-address' className='sr-only'>
                                 Email address
@@ -65,7 +65,7 @@ export const LoginScreen = () => {
                                 type='email'
                                 autoComplete='email'
                                 required
-                                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none'
+                                className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none'
                                 placeholder='Email address'
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -80,7 +80,7 @@ export const LoginScreen = () => {
                                 type='password'
                                 autoComplete='current-password'
                                 required
-                                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none'
+                                className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none'
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder='Password'
                             />
@@ -90,15 +90,15 @@ export const LoginScreen = () => {
                     <div>
                         <button
                             type='submit'
-                            className='group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold uppercase rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
+                            className='group relative flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-3 px-4 text-sm font-bold uppercase text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
                         >
                             <span>Continue</span>
-                            <ArrowSmRightIcon className='h-5 w-5 text-primary-100 group-hover:text-primary-200 ml-2 -mr-1' />
+                            <ArrowSmRightIcon className='ml-2 -mr-1 h-5 w-5 text-primary-100 group-hover:text-primary-200' />
                         </button>
                     </div>
                 </form>
 
-                <div className='absolute left-0 bottom-0 w-full items-center justify-center flex flex-col space-y-3 py-10'>
+                <div className='absolute left-0 bottom-0 flex w-full flex-col items-center justify-center space-y-3 py-10'>
                     <p className='text-center text-sm text-gray-300'>
                         Forgot password?{' '}
                         <a

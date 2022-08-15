@@ -27,11 +27,11 @@ export const AppMenu = () => {
     }
 
     return (
-        <div className='absolute top-0 right-0 z-40 h-14 flex items-center px-4'>
+        <div className='absolute top-0 right-0 z-40 flex h-14 items-center px-4'>
             <Menu as='div' className='relative'>
                 <div>
-                    <Menu.Button className='hover:bg-gray-700 p-1.5 items-center justify-center flex -mr-1 rounded-md cursor-pointer outline-none'>
-                        <MenuIcon className='w-6 h-6 text-white' />
+                    <Menu.Button className='-mr-1 flex cursor-pointer items-center justify-center rounded-md p-1.5 outline-none hover:bg-gray-700'>
+                        <MenuIcon className='h-6 w-6 text-white' />
                     </Menu.Button>
                 </div>
                 <Transition
@@ -43,7 +43,7 @@ export const AppMenu = () => {
                     leaveFrom='transform opacity-100 scale-100'
                     leaveTo='transform opacity-0 scale-95'
                 >
-                    <Menu.Items className='origin-top-right absolute right-1 mt-2 w-48 rounded shadow bg-white dark:bg-gray-700 ring-1 ring-black/5 focus:outline-none'>
+                    <Menu.Items className='absolute right-1 mt-2 w-48 origin-top-right rounded bg-white shadow ring-1 ring-black/5 focus:outline-none dark:bg-gray-700'>
                         {!locked && (
                             <>
                                 <Menu.Item>
@@ -52,11 +52,11 @@ export const AppMenu = () => {
                                             type='button'
                                             className={classNames(
                                                 active ? 'bg-gray-100 dark:bg-gray-500' : '',
-                                                'px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium rounded-t inline-flex items-center w-full justify-between'
+                                                'inline-flex w-full items-center justify-between rounded-t px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-100'
                                             )}
                                         >
                                             <span>Add new item</span>
-                                            <DocumentAddIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                            <DocumentAddIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />
                                         </button>
                                     )}
                                 </Menu.Item>
@@ -67,11 +67,11 @@ export const AppMenu = () => {
                                             type='button'
                                             className={classNames(
                                                 active ? 'bg-gray-100 dark:bg-gray-500' : '',
-                                                'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium justify-between'
+                                                'inline-flex w-full items-center justify-between px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-100'
                                             )}
                                         >
                                             <span>Preferences</span>
-                                            <CogIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                            <CogIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />
                                         </button>
                                     )}
                                 </Menu.Item>
@@ -81,12 +81,12 @@ export const AppMenu = () => {
                                             type='button'
                                             className={classNames(
                                                 active ? 'bg-gray-100 dark:bg-gray-500' : '',
-                                                'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium justify-between'
+                                                'inline-flex w-full items-center justify-between px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-100'
                                             )}
                                             onClick={() => setLockStreenState(true)}
                                         >
                                             <span>Lock Vault</span>
-                                            <LockClosedIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                            <LockClosedIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />
                                         </button>
                                     )}
                                 </Menu.Item>
@@ -99,12 +99,12 @@ export const AppMenu = () => {
                                     type='button'
                                     className={classNames(
                                         active ? 'bg-gray-100 dark:bg-gray-500' : '',
-                                        'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium rounded-b justify-between'
+                                        'inline-flex w-full items-center justify-between rounded-b px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-100'
                                     )}
                                     onClick={handleSignOut}
                                 >
                                     <span>Sign out</span>
-                                    <LogoutIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                    <LogoutIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />
                                 </button>
                             )}
                         </Menu.Item>
@@ -115,12 +115,12 @@ export const AppMenu = () => {
                                     type='button'
                                     className={classNames(
                                         active ? 'bg-gray-100 dark:bg-gray-500' : '',
-                                        'inline-flex items-center w-full px-5 py-2.5 text-sm text-gray-700 dark:text-gray-100 font-medium rounded-b justify-between'
+                                        'inline-flex w-full items-center justify-between rounded-b px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-100'
                                     )}
                                     onClick={handleQuit}
                                 >
                                     <span>Quit</span>
-                                    <XCircleIcon className='w-4 h-4 text-gray-500 dark:text-gray-300' />
+                                    <XCircleIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />
                                 </button>
                             )}
                         </Menu.Item>
