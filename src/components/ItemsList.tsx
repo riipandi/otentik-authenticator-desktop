@@ -2,7 +2,7 @@ import { PencilAltIcon } from '@heroicons/react/outline'
 import { toast } from 'react-hot-toast'
 import clipboard from 'clipboardy'
 
-import { vault } from '../mocks'
+import { vaultGrouped as vault } from '../mocks'
 
 export const ItemsList = () => {
     return (

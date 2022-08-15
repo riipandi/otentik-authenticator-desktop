@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { appWindow } from '@tauri-apps/api/window'
 import { useHotkeys } from 'react-hotkeys-hook'
+
 import { disableBrowserEvents } from './utils/helpers'
 import { useAuth } from './hooks/useAuth'
 

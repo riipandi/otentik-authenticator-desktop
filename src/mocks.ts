@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { generateTOTP } from './utils/helpers'
+import { sortObjectsByProp, generateTOTP, groupArrayObjectByAlphabet } from './utils/helpers'
 
 const generateMock = async (count: number): Promise<any> => {
     const result = []
@@ -19,11 +19,15 @@ const generateMock = async (count: number): Promise<any> => {
 
         result.push({ id, issuer, userId, token, secret, algorithm, tokenType, period, digits })
     }
+
     return result
 }
 
-export const vault = {
-    A: await generateMock(faker.datatype.number({ min: 3, max: 4 })),
-    B: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
-    C: await generateMock(faker.datatype.number({ min: 1, max: 4 })),
-}
+// Unsorted mock data.
+export const randomData = await generateMock(100)
+
+// Sort array with the custom function that sorts alphabetically by the name key
+export const sortedData = sortObjectsByProp(randomData, 'issuer')
+
+// Group array by the alphabetical key of the name key
+export const vaultGrouped = groupArrayObjectByAlphabet(sortedData)
