@@ -2,30 +2,49 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { EyeIcon, EyeOffIcon, LockClosedIcon } from '@heroicons/react/outline'
 import { ExclamationCircleIcon } from '@heroicons/react/solid'
+
+import { useAuth } from '../hooks/useAuth'
+import { sbClient } from '../utils/supabase'
 import { classNames } from '../utils/helpers'
 import { useStore } from '../stores/screenLockStore'
+import { LoaderScreen } from './LoaderScreen'
 
 export const LockScreen = () => {
+    const session = useAuth()
     const locked = useStore((state) => state.locked)
     const setLockStreenState = useStore((state) => state.setLockStreenState)
 
-    const [error, setError] = useState(false)
+    const [error, setError] = useState<any>({ error: null, text: null })
     const [passphrase, setPassphrase] = useState('')
     const [inputType, setInputType] = useState('password')
+    const [loading, setLoading] = useState(false)
 
     const handleShowHidePassword = () => {
         setInputType(inputType === 'password' ? 'text' : 'password')
     }
 
-    const handleUnlockAction = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUnlockAction = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (!passphrase || passphrase !== 'secret') {
-            setError(true)
-        } else {
-            setError(false)
-            setLockStreenState(false)
+
+        if (!passphrase) {
+            return setError({ error: true, text: 'Passphrase required!' })
         }
+
+        setLoading(true)
+        const credentials = { email: session?.user?.email, password: passphrase }
+        const { error } = await sbClient.auth.signIn(credentials)
+
+        if (error) {
+            setLoading(false)
+            return setError({ error: true, text: error.message })
+        }
+
+        setLoading(false)
+        setError(null)
+        setLockStreenState(false)
     }
+
+    if (loading) return <LoaderScreen />
 
     return (
         <Transition.Root show={locked} as={Fragment}>
@@ -71,7 +90,7 @@ export const LockScreen = () => {
                                             </Dialog.Title>
                                             <div className='mt-2'>
                                                 <p className='text-sm text-gray-500'>
-                                                    Enter your passphrase to unlock the vault.
+                                                    Enter your password to unlock the vault.
                                                 </p>
                                             </div>
 
@@ -90,10 +109,9 @@ export const LockScreen = () => {
                                                             'block w-full pr-10 focus:outline-none sm:text-sm rounded-md'
                                                         )}
                                                         onChange={(e) => {
-                                                            setError(false)
+                                                            setError(null)
                                                             setPassphrase(e.target.value)
                                                         }}
-                                                        aria-describedby='passphrase-error'
                                                         aria-invalid='true'
                                                     />
 
@@ -123,12 +141,7 @@ export const LockScreen = () => {
                                                     )}
                                                 </div>
                                                 {error && (
-                                                    <p
-                                                        id='passphrase-error'
-                                                        className='mt-2 text-sm text-red-600'
-                                                    >
-                                                        Invalid passphrase!
-                                                    </p>
+                                                    <p className='mt-2 text-sm text-red-600'>{error.text}</p>
                                                 )}
                                             </div>
                                         </div>
