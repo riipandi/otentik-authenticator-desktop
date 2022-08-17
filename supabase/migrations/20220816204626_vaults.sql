@@ -1,4 +1,33 @@
 /**
+* MasterKeys
+*/
+create table masterkeys (
+  id bigserial primary key,
+  user_id uuid references auth.users not null,
+  passphrase text not null,
+  hints text,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+alter table masterkeys enable row level security;
+create policy "Can only view own vault data." on masterkeys for select using (auth.uid() = user_id);
+create policy "Users can insert their own vault data." on masterkeys for insert with check (auth.uid() = user_id);
+create policy "Users can update own vault data." on masterkeys for update using (auth.uid() = user_id);
+
+create function public.handle_masterkeys_updated_at()
+returns trigger as
+$$
+  begin
+    new.updated_at = now();
+    return new;
+  end;
+$$
+language plpgsql security definer;
+
+
+create trigger on_masterkeys_updated before update on masterkeys
+  for each row execute procedure handle_masterkeys_updated_at();
+
+/**
 * VAULTS
 */
 create table vaults (
@@ -23,7 +52,7 @@ create policy "Can only view own vault data." on vaults for select using (auth.u
 create policy "Users can insert their own vault data." on vaults for insert with check (auth.uid() = user_id);
 create policy "Users can update own vault data." on vaults for update using (auth.uid() = user_id);
 
-create function public.handle_updated_at()
+create function public.handle_vaults_updated_at()
 returns trigger as
 $$
   begin
@@ -33,5 +62,6 @@ $$
 $$
 language plpgsql security definer;
 
-create trigger on_vault_updated before update on vaults
-  for each row execute procedure handle_updated_at();
+
+create trigger on_vaults_updated before update on vaults
+  for each row execute procedure handle_vaults_updated_at();

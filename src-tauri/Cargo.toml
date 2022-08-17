@@ -19,9 +19,12 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.5", features = ["api-all", "system-tray"] }
 libreauth = { version = "^0.15", features = ["key", "oath", "pass"] }
+binascii = { version = "^0.1", features = ["encode", "decode"] }
 cocoa = "0.24.0"
 window-vibrancy = "0.2.0"
 window-shadows = "0.2.0"
+magic-crypt = "^3.1"
+bcrypt = "^0.13"
 
 [dependencies.tauri-plugin-store]
 git = "https://github.com/tauri-apps/tauri-plugin-store"

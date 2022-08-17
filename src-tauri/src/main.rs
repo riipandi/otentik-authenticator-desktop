@@ -9,6 +9,7 @@ use tauri_plugin_store::PluginBuilder;
 mod menu;
 // mod tray_menu;
 mod otp_generator;
+mod security;
 
 fn main() {
     // let system_tray = SystemTray::new().with_menu(tray_menu::tray_menu());
@@ -76,7 +77,13 @@ fn main() {
             }
             _ => {}
         })
-        .invoke_handler(tauri::generate_handler![otp_generator::generate_totp])
+        .invoke_handler(tauri::generate_handler![
+            otp_generator::generate_totp,
+            security::encrypt_str,
+            security::decrypt_str,
+            security::create_hash,
+            security::verify_hash,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

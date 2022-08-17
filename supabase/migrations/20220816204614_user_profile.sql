@@ -4,9 +4,9 @@
 */
 create table users_profiles (
   id uuid references auth.users not null primary key,
-  first_name varchar(255) not null,
-  last_name varchar(255),
-  avatar_url text
+  realname varchar(255) not null,
+  avatar_url text,
+  onboarded_at timestamp with time zone
 );
 alter table users_profiles enable row level security;
 create policy "Public profiles are viewable by everyone." on users_profiles for select using (true);
@@ -20,8 +20,8 @@ create function public.handle_new_user()
 returns trigger as
 $$
   begin
-    insert into public.users_profiles (id, first_name, last_name, avatar_url)
-    values (new.id, new.raw_user_meta_data->>'first_name', new.raw_user_meta_data->>'last_name', new.raw_user_meta_data->>'avatar_url');
+    insert into public.users_profiles (id, realname, avatar_url)
+    values (new.id, new.raw_user_meta_data ->> 'realname', NEW.raw_user_meta_data ->> 'avatar_url');
     return new;
   end;
 $$
@@ -36,9 +36,3 @@ begin;
   create publication supabase_realtime;
 commit;
 alter publication supabase_realtime add table users_profiles;
-
--- Set up Storage!
-insert into storage.buckets (id, name) values ('avatars', 'avatars');
-create policy "Avatar images are publicly accessible." on storage.objects for select using (bucket_id = 'avatars');
-create policy "Anyone can upload an avatar." on storage.objects for insert with check (bucket_id = 'avatars');
-create policy "Anyone can update an avatar." on storage.objects for update with check (bucket_id = 'avatars');

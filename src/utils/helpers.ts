@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/tauri'
+import { localData } from './storage'
 
 // Get initial from full name for avatar.
 export const getInitials = (fullName: string): string => {
@@ -24,6 +25,24 @@ export const generateTOTP = async ({
     algorithm,
 }: GenerateTOTPTypes): Promise<any> => {
     return invoke('generate_totp', { secret, period, digits, algorithm })
+}
+
+export const encryptStr = async (plainStr: string): Promise<any> => {
+    const passphrase = await localData.get('passphrase')
+    return invoke('encrypt_str', { plainStr, passphrase })
+}
+
+export const decryptStr = async (encryptedStr: string): Promise<any> => {
+    const passphrase = await localData.get('passphrase')
+    return invoke('decrypt_str', { encryptedStr, passphrase })
+}
+
+export const createHash = async (plaintext: string): Promise<any> => {
+    return invoke('create_hash', { plaintext })
+}
+
+export const verifyHash = async (plaintext: string, hashedStr: string): Promise<any> => {
+    return invoke('verify_hash', { plaintext, hashedStr })
 }
 
 // Disable browser back button.
