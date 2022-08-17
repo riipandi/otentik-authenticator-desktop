@@ -3,7 +3,7 @@ import { Toaster, ToastIcon, resolveValue } from 'react-hot-toast'
 
 export const ToastMessage = () => {
     return (
-        <Toaster position='bottom-center' toastOptions={{ duration: 1000 }}>
+        <Toaster position='bottom-center' toastOptions={{ duration: 3000 }}>
             {(t) => (
                 <Transition
                     appear

@@ -11,10 +11,8 @@ export const getInitials = (fullName: string): string => {
 
 // Generate TOTP token from secret using Rust.
 // https://tauri.app/v1/guides/features/command/
-export const generateTOTP = async (secret: string): Promise<any> => {
-    return invoke('generate_totp', { secret, period: 30, digits: 6 })
-    // .then((token) =>  console.log(token))
-    // .catch((error) => console.error(error))
+export const generateTOTP = async (secret: string, period: number, digits: number): Promise<any> => {
+    return invoke('generate_totp', { secret, period, digits })
 }
 
 // Disable browser back button.
@@ -110,4 +108,30 @@ export function groupArrayObjectByAlphabetAsObject(arr: any[]) {
     }, {})
 
     return Object.values(data)
+}
+
+export interface IVault {
+    user_id: string
+    issuer: string
+    user_identity: string
+    secret_key: string
+    algorithm: string
+    token_type: string
+    period: string
+    digits: string
+    token?: string
+}
+
+// TODO: fix this types
+export async function parseVaults(data: any[]) {
+    const arr = data.map(async (item) => {
+        const token = await generateTOTP(item.secret_key, item.period, item.digits)
+        return { ...item, token }
+    })
+
+    const newData = await Promise.all(arr)
+    const sortedData = sortObjectsByProp(newData, 'issuer')
+    const groupedData = groupArrayObjectByAlphabet(sortedData)
+
+    return groupedData
 }

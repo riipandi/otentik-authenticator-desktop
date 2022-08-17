@@ -17,8 +17,11 @@ export const AppMenu = () => {
     const locked = useStores((state) => state.locked)
     const setLockStreenState = useStores((state) => state.setLockStreenState)
     const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
+    const setLoading = useStores((state) => state.setLoading)
 
+    // Reset all states before quit.
     const handleQuit = async () => {
+        setLoading(false)
         setLockStreenState(true)
         // wait for screen locked before quitting
         await delay(1000)

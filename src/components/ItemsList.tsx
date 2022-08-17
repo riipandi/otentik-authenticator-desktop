@@ -1,35 +1,49 @@
+import { FC } from 'react'
 import { PencilAltIcon } from '@heroicons/react/outline'
 import { toast } from 'react-hot-toast'
 import clipboard from 'clipboardy'
 
 import { EmptyState } from './EmptyState'
 
-import { vaultGrouped as vault } from '../mocks'
+type ItemProps = {
+    data: any
+    loading: boolean
+}
 
-export const ItemsList = () => {
-    if (!vault || Object.keys(vault).length === 0) {
+export const ItemsList: FC<ItemProps> = ({ data, loading }) => {
+    const handleCopy = (token: string) => {
+        clipboard.write(token)
+        toast.success('Token copied to clipboard!')
+    }
+
+    if (loading) {
+        return (
+            <div className='flex h-full items-center justify-center bg-gray-900 font-medium'>
+                <div className='loader'>Loading...</div>
+            </div>
+        )
+    }
+
+    if (!data || Object.keys(data).length === 0) {
         return <EmptyState />
     }
 
     return (
         <>
-            {Object.keys(vault).map((letter) => (
+            {Object.keys(data).map((letter) => (
                 <div key={letter} className='relative'>
                     <div className='sticky top-0 border-t border-b border-gray-200 bg-gray-100 px-6 py-1 text-sm font-medium text-gray-500 dark:border-gray-700 dark:bg-gray-800'>
                         <h3>{letter}</h3>
                     </div>
                     <ul role='list' className='relative z-0 divide-y divide-gray-200 dark:divide-gray-700'>
                         {/* @ts-ignore */}
-                        {vault[letter].map((item) => (
+                        {data[letter].map((item) => (
                             <li key={item.id} className='bg-gray-50 dark:bg-gray-900'>
                                 <div className='group relative flex items-center space-x-3 px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-500 hover:bg-primary-50 dark:hover:bg-gray-800'>
                                     <button
                                         type='button'
                                         className='relative flex-shrink-0 cursor-pointer rounded-lg'
-                                        onClick={() => {
-                                            clipboard.write(item.token)
-                                            toast.success('Token copied to clipboard!')
-                                        }}
+                                        onClick={() => handleCopy(item.token)}
                                     >
                                         <div className='backdrop-blur-xs absolute z-20 h-10 w-20 cursor-pointer rounded-lg bg-white/30 transition delay-150 duration-150 ease-in-out group-hover:bg-transparent group-hover:backdrop-blur-none' />
                                         <div className='group-hover:-trangray-y-1 inline-flex h-10 w-20 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 transition delay-150 duration-300 ease-in-out group-hover:scale-110'>
@@ -38,6 +52,7 @@ export const ItemsList = () => {
                                             </span>
                                         </div>
                                     </button>
+
                                     <div className='flex w-full min-w-0 flex-1 justify-between'>
                                         <div className='focus:outline-none'>
                                             <span className='absolute inset-0' aria-hidden='true' />

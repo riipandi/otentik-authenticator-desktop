@@ -7,13 +7,16 @@ create table vaults (
   issuer text not null,
   user_identity text not null,
   secret_key text not null,
-  algorithm text not null,
+  algorithm text not null default 'SHA1',
   token_type text not null DEFAULT 'TOTP',
   period numeric not null CHECK (period > 0) DEFAULT 30,
   digits numeric not null CHECK (digits > 0) DEFAULT 6,
+  backup_code text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
-  PRIMARY KEY (id)
+  primary key (id),
+  unique(secret_key),
+  constraint secret_key_length check (char_length(secret_key) >= 3)
 );
 alter table vaults enable row level security;
 create policy "Can only view own vault data." on vaults for select using (auth.uid() = user_id);

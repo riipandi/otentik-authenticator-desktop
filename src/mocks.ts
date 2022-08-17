@@ -8,16 +8,16 @@ const generateMock = async (count: number): Promise<any> => {
         const id = faker.datatype.uuid()
         const issuer = faker.internet.domainName()
         const user_identity = faker.internet.email().toLowerCase()
-        const secret = faker.random.alphaNumeric(40)
+        const secret_key = faker.random.alphaNumeric(40)
         const algorithm = 'sha1'
-        const tokenType = 'TOTP'
+        const token_type = 'TOTP'
         const period = 30
         const digits = 6
 
         // Create a new TOTP object.
-        const token = await generateTOTP(secret)
+        const token = await generateTOTP(secret_key, period, digits)
 
-        result.push({ id, issuer, user_identity, token, secret, algorithm, tokenType, period, digits })
+        result.push({ id, issuer, user_identity, token, secret_key, algorithm, token_type, period, digits })
     }
 
     return result
@@ -30,5 +30,5 @@ export const randomData = await generateMock(100)
 export const sortedData = sortObjectsByProp(randomData, 'issuer')
 
 // Group array by the alphabetical key of the name key
-// export const vaultGrouped = groupArrayObjectByAlphabet(sortedData)
-export const vaultGrouped = {}
+export const vaultGrouped = groupArrayObjectByAlphabet(sortedData)
+// export const vaultGrouped = {}

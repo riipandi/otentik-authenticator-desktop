@@ -15,10 +15,12 @@ export const LockScreen = () => {
     const locked = useStores((state) => state.locked)
     const setLockStreenState = useStores((state) => state.setLockStreenState)
 
+    const loading = useStores((state) => state.loading)
+    const setLoading = useStores((state) => state.setLoading)
+
     const [error, setError] = useState<any>({ error: null, text: null })
     const [passphrase, setPassphrase] = useState('')
     const [inputType, setInputType] = useState('password')
-    const [loading, setLoading] = useState(false)
 
     const handleShowHidePassword = () => {
         setInputType(inputType === 'password' ? 'text' : 'password')
