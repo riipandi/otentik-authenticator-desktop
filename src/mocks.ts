@@ -8,16 +8,16 @@ const generateMock = async (count: number): Promise<any> => {
         const id = faker.datatype.uuid()
         const issuer = faker.internet.domainName()
         const user_identity = faker.internet.email().toLowerCase()
-        const secret_key = faker.random.alphaNumeric(40)
-        const algorithm = 'sha1'
+        const secret = faker.random.alphaNumeric(40)
+        const algorithm = 'SHA1'
         const token_type = 'TOTP'
         const period = 30
         const digits = 6
 
         // Create a new TOTP object.
-        const token = await generateTOTP(secret_key, period, digits)
+        const token = await generateTOTP({ secret, period, digits, algorithm })
 
-        result.push({ id, issuer, user_identity, token, secret_key, algorithm, token_type, period, digits })
+        result.push({ id, issuer, user_identity, token, secret, algorithm, token_type, period, digits })
     }
 
     return result

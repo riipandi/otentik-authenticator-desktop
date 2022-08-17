@@ -9,10 +9,21 @@ export const getInitials = (fullName: string): string => {
     return initials.join('')
 }
 
+type GenerateTOTPTypes = {
+    secret: string
+    digits: number
+    period: number
+    algorithm: 'SHA1' | 'SHA256'
+}
 // Generate TOTP token from secret using Rust.
 // https://tauri.app/v1/guides/features/command/
-export const generateTOTP = async (secret: string, period: number, digits: number): Promise<any> => {
-    return invoke('generate_totp', { secret, period, digits })
+export const generateTOTP = async ({
+    secret,
+    period,
+    digits,
+    algorithm,
+}: GenerateTOTPTypes): Promise<any> => {
+    return invoke('generate_totp', { secret, period, digits, algorithm })
 }
 
 // Disable browser back button.
@@ -125,7 +136,12 @@ export interface IVault {
 // TODO: fix this types
 export async function parseVaults(data: any[]) {
     const arr = data.map(async (item) => {
-        const token = await generateTOTP(item.secret_key, item.period, item.digits)
+        const token = await generateTOTP({
+            secret: item.secret_key,
+            period: item.period,
+            digits: item.digits,
+            algorithm: item.algorithm,
+        })
         return { ...item, token }
     })
 
@@ -134,4 +150,32 @@ export async function parseVaults(data: any[]) {
     const groupedData = groupArrayObjectByAlphabet(sortedData)
 
     return groupedData
+}
+/**
+ * Function to check if a character is alpha-numeric.
+ *
+ * @param {string} c
+ * @return {boolean}
+ */
+export function isAlphaNumeric(str: string): boolean {
+    /* Iterating character by character to get ASCII code for each character */
+    for (let i = 0, len = str.length, code = 0; i < len; ++i) {
+        /* Collecting charCode from i index value in a string */
+        code = str.charCodeAt(i)
+
+        /* Validating charCode falls into anyone category */
+        if (
+            (code > 47 && code < 58) || // numeric (0-9)
+            (code > 64 && code < 91) || // upper alpha (A-Z)
+            (code > 96 && code < 123) // lower alpha (a-z)
+        ) {
+            continue
+        }
+
+        /* If nothing satisfies then returning false */
+        return false
+    }
+
+    /* After validating all the characters and we returning success message*/
+    return true
 }

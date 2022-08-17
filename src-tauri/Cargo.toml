@@ -18,10 +18,10 @@ tauri-build = { version = "1.0.4", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.5", features = ["api-all", "system-tray"] }
+libreauth = { version = "^0.15", features = ["key", "oath", "pass"] }
 cocoa = "0.24.0"
 window-vibrancy = "0.2.0"
 window-shadows = "0.2.0"
-totp-rs = "^3.0"
 
 [dependencies.tauri-plugin-store]
 git = "https://github.com/tauri-apps/tauri-plugin-store"

@@ -6,7 +6,7 @@ create table vaults (
   user_id uuid references auth.users not null,
   issuer text not null,
   user_identity text not null,
-  secret_key text not null,
+  secret_key text unique not null,
   algorithm text not null default 'SHA1',
   token_type text not null DEFAULT 'TOTP',
   period numeric not null CHECK (period > 0) DEFAULT 30,

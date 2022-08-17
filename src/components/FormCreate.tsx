@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast'
 import { useStores } from '../stores/stores'
 import { sbClient } from '../utils/supabase'
 import { DialogTransition } from './DialogTransition'
-import { classNames } from '../utils/helpers'
+import { classNames, isAlphaNumeric } from '../utils/helpers'
 import { useAuth } from '../hooks/useAuth'
 
 export const FormCreate = () => {
@@ -26,8 +26,17 @@ export const FormCreate = () => {
         e.preventDefault()
         setLoading(true)
 
-        const { data, error } = await sbClient.from('vaults').insert([
-            {
+        // Check if secret key is valid (at least 120 bits in length)
+        if (secretKey.length < 16 || !isAlphaNumeric(secretKey)) {
+            const msg = 'Secret key must be alphanumeric and at least 16 characters long!'
+            setErrorMsg({ error: 'Invalid secret key', text: msg })
+            toast.error(msg)
+            return setLoading(false)
+        }
+
+        const { error } = await sbClient
+            .from('vaults')
+            .insert({
                 user_id: session?.user?.id,
                 issuer: issuer,
                 user_identity: userIdentity,
@@ -37,17 +46,13 @@ export const FormCreate = () => {
                 token_type: 'TOTP',
                 period: 30,
                 digits: 6,
-            },
-        ])
+            })
+            .single()
 
         if (error) {
             setLoading(false)
             setErrorMsg({ error: true, text: error.message })
             return toast.error(errorMsg.text)
-        } else if (data) {
-            setLoading(false)
-            setErrorMsg({ error: true, text: 'Item already exists!' })
-            return toast.error('Item already exists!')
         }
 
         setLoading(false)
