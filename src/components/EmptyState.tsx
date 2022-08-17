@@ -8,8 +8,7 @@ import { useStores } from '../stores/stores'
 
 export const EmptyState = () => {
     const [setVault] = useState([] as any)
-    const loading = useStores((state) => state.loading)
-    const setLoading = useStores((state) => state.setLoading)
+    const [loading, setLoading] = useState(false)
     const [lastSync, setLastSync] = useState(new Date())
 
     const fetchData = async () => {

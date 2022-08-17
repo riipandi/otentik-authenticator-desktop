@@ -13,9 +13,7 @@ import { ProgressBar } from './ProgressBar'
 import { SearchBar } from './SearchBar'
 
 export const MainScreen = () => {
-    const loading = useStores((state) => state.loading)
-    const setLoading = useStores((state) => state.setLoading)
-
+    const [loading, setLoading] = useState(false)
     const [count, setCount] = useState(0)
     const [startCount, setStartCount] = useState(false)
     const [vault, setVault] = useState([] as any)

@@ -10,8 +10,7 @@ import { useAuth } from '../hooks/useAuth'
 
 export const FormCreate = () => {
     const session = useAuth()
-    const loading = useStores((state) => state.loading)
-    const setLoading = useStores((state) => state.setLoading)
+    const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState<any>({ error: null, text: null })
 
     const formCreateOpen = useStores((state) => state.formCreateOpen)

@@ -2,12 +2,9 @@ import { useState } from 'react'
 import { ArrowSmRightIcon } from '@heroicons/react/solid'
 import { sbClient } from '../utils/supabase'
 import { LoaderScreen } from './LoaderScreen'
-import { useStores } from '../stores/stores'
 
 export const LoginScreen = () => {
-    const loading = useStores((state) => state.loading)
-    const setLoading = useStores((state) => state.setLoading)
-
+    const [loading, setLoading] = useState(false)
     const [actionIsLogin, setActionIsLogin] = useState(true)
     const [error, setError] = useState<any>({ error: null, text: null })
     const [email, setEmail] = useState('')

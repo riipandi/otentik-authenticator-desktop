@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { LockClosedIcon, CogIcon, LogoutIcon, DocumentAddIcon, XCircleIcon } from '@heroicons/react/outline'
 import { MenuIcon } from '@heroicons/react/solid'
@@ -17,18 +17,22 @@ export const AppMenu = () => {
     const locked = useStores((state) => state.locked)
     const setLockStreenState = useStores((state) => state.setLockStreenState)
     const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
-    const setLoading = useStores((state) => state.setLoading)
 
     // Reset all states before quit.
-    const handleQuit = async () => {
-        setLoading(false)
+    const resetStates = () => {
         setLockStreenState(true)
+        setFormCreateOpen(false)
+    }
+
+    const handleQuit = async () => {
+        resetStates()
         // wait for screen locked before quitting
         await delay(1000)
         appWindow.close()
     }
 
     const handleSignOut = () => {
+        resetStates()
         sbClient.auth.signOut().catch(console.error)
     }
 
