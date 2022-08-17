@@ -11,23 +11,26 @@ pub(crate) fn menu() -> Menu {
         .website(String::from("https://otentik.app/authenticator"))
         .website_label(String::from("Homepage"));
 
-    Menu::new()
-        .add_submenu(Submenu::new(
-            "Authenticator",
-            Menu::new()
-                .add_native_item(MenuItem::About("Authenticator".to_string(), about_menu))
-                .add_native_item(MenuItem::Separator)
-                .add_native_item(MenuItem::Quit),
-        ))
-        // .add_submenu(Submenu::new(
-        //     "Edit",
-        //     Menu::new()
-        //         .add_native_item(MenuItem::Undo)
-        //         .add_native_item(MenuItem::Redo)
-        //         .add_native_item(MenuItem::Separator)
-        //         .add_native_item(MenuItem::Cut)
-        //         .add_native_item(MenuItem::Copy)
-        //         .add_native_item(MenuItem::Paste)
-        //         .add_native_item(MenuItem::SelectAll),
-        // ))
+    let app_menu = Submenu::new(
+        "Authenticator",
+        Menu::new()
+            .add_native_item(MenuItem::About("Authenticator".to_string(), about_menu))
+            .add_native_item(MenuItem::Separator)
+            .add_native_item(MenuItem::Quit),
+    );
+
+    let edit_menu = Submenu::new(
+        "Edit",
+        Menu::new()
+            .add_native_item(MenuItem::Undo)
+            .add_native_item(MenuItem::Redo)
+            .add_native_item(MenuItem::Separator)
+            .add_native_item(MenuItem::Cut)
+            .add_native_item(MenuItem::Copy)
+            .add_native_item(MenuItem::Paste)
+            .add_native_item(MenuItem::SelectAll),
+    );
+
+    // Register the menus
+    Menu::new().add_submenu(app_menu).add_submenu(edit_menu)
 }
