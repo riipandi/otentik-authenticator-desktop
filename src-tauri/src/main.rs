@@ -10,21 +10,20 @@ mod menu;
 // mod tray_menu;
 mod otp_generator;
 
-
 fn main() {
     // let system_tray = SystemTray::new().with_menu(tray_menu::tray_menu());
     let system_tray = SystemTray::new();
     let app = tauri::Builder::default();
 
-    app
-        .plugin(PluginBuilder::default().build())
+    app.plugin(PluginBuilder::default().build())
         .menu(menu::menu())
         .setup(|app| {
             let win = app.get_window("main").unwrap();
             win.set_transparent_titlebar(true, true);
 
             // only include this code on debug builds
-            #[cfg(debug_assertions)] {
+            #[cfg(debug_assertions)]
+            {
                 win.open_devtools();
             }
 
@@ -45,29 +44,36 @@ fn main() {
                     main_window.set_focus().unwrap();
                 }
             }
-            SystemTrayEvent::RightClick { position: _, size: _, .. } => {
+            SystemTrayEvent::RightClick {
+                position: _,
+                size: _,
+                ..
+            } => {
                 println!("system tray received a right click");
             }
             SystemTrayEvent::MenuItemClick { id, .. } => {
                 let item_handle = app.tray_handle().get_item(&id);
                 match id.as_str() {
-                "open" => {
-                    let main_window = app.get_window("main").unwrap();
-                    if main_window.is_visible().unwrap() {
-                        main_window.hide().unwrap();
-                        item_handle.set_title("Open Authenticator").unwrap();
-                    } else {
-                        main_window.set_focus().unwrap();
-                        item_handle.set_title("Hide Authenticator").unwrap();
+                    "open" => {
+                        let main_window = app.get_window("main").unwrap();
+                        if main_window.is_visible().unwrap() {
+                            main_window.hide().unwrap();
+                            item_handle.set_title("Open Authenticator").unwrap();
+                        } else {
+                            main_window.set_focus().unwrap();
+                            item_handle.set_title("Hide Authenticator").unwrap();
+                        }
                     }
+                    "hide" => {
+                        let main_window = app.get_window("main").unwrap();
+                        main_window.hide().unwrap();
+                    }
+                    "quit" => {
+                        std::process::exit(0);
+                    }
+                    _ => {}
                 }
-                "hide" => {
-                    let main_window = app.get_window("main").unwrap();
-                    main_window.hide().unwrap();
-                }
-                "quit" => { std::process::exit(0); }
-                _ => {}
-            }},
+            }
             _ => {}
         })
         .invoke_handler(tauri::generate_handler![otp_generator::generate_totp])

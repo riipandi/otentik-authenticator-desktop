@@ -8,7 +8,7 @@ export const ToastMessage = () => {
                 <Transition
                     appear
                     show={t.visible}
-                    className='flex transform rounded bg-white p-4 shadow-lg'
+                    className='z-50 flex transform rounded bg-white p-4 shadow-lg'
                     enter='transition-all duration-150'
                     enterFrom='opacity-0 scale-50'
                     enterTo='opacity-100 scale-100'

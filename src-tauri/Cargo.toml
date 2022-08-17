@@ -7,7 +7,7 @@ license = "Apache-2.0"
 repository = "https://github.com/feelantera/otentik-authenticator-desktop"
 default-run = "app"
 edition = "2021"
-rust-version = "1.57"
+rust-version = "1.63"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,8 +19,8 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.5", features = ["api-all", "system-tray"] }
 cocoa = "0.24.0"
-window-vibrancy = "0.1.1"
-window-shadows = "0.1.2"
+window-vibrancy = "0.2.0"
+window-shadows = "0.2.0"
 totp-rs = "^3.0"
 
 [dependencies.tauri-plugin-store]

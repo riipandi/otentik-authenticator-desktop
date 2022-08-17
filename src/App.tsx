@@ -7,13 +7,16 @@ import { useAuth } from './hooks/useAuth'
 
 import { MainScreen } from './components/MainScren'
 import { AuthScreen } from './components/AuthScreen'
+import { useStores } from './stores/stores'
 
 function App() {
     const session = useAuth()
+    const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
 
     // Keyboard shortcut for open debugging tools
     useHotkeys('cmd+alt+j', () => console.log('Open DevTools'))
     useHotkeys('ctrl+k, command+k', () => console.log('KEYBOARD SHORTCUT CHEATSHEETS'))
+    useHotkeys('ctrl+n, command+n', () => setFormCreateOpen(true))
 
     useEffect(() => {
         disableBrowserEvents('contextmenu')

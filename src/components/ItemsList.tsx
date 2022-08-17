@@ -2,9 +2,15 @@ import { PencilAltIcon } from '@heroicons/react/outline'
 import { toast } from 'react-hot-toast'
 import clipboard from 'clipboardy'
 
+import { EmptyState } from './EmptyState'
+
 import { vaultGrouped as vault } from '../mocks'
 
 export const ItemsList = () => {
+    if (!vault || Object.keys(vault).length === 0) {
+        return <EmptyState />
+    }
+
     return (
         <>
             {Object.keys(vault).map((letter) => (
@@ -26,7 +32,7 @@ export const ItemsList = () => {
                                         }}
                                     >
                                         <div className='backdrop-blur-xs absolute z-20 h-10 w-20 cursor-pointer rounded-lg bg-white/30 transition delay-150 duration-150 ease-in-out group-hover:bg-transparent group-hover:backdrop-blur-none' />
-                                        <div className='inline-flex h-10 w-20 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 transition delay-150 duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-110'>
+                                        <div className='group-hover:-trangray-y-1 inline-flex h-10 w-20 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 transition delay-150 duration-300 ease-in-out group-hover:scale-110'>
                                             <span className='font-mono text-sm font-bold leading-none tracking-tighter text-white'>
                                                 {item.token}
                                             </span>
@@ -39,7 +45,7 @@ export const ItemsList = () => {
                                                 {item.issuer.toUpperCase()}
                                             </p>
                                             <p className='truncate text-xs font-medium text-gray-500 dark:text-gray-400'>
-                                                {item.userId}
+                                                {item.user_identity}
                                             </p>
                                         </div>
 
