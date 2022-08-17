@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { parseVaults } from '../utils/helpers'
-import { sbClient } from '../utils/supabase'
+import { fetchVaults } from '../utils/supabase'
 
 import { AppMenu } from './AppMenu'
 import { FormCreate } from './FormCreate'
@@ -12,15 +12,25 @@ import { ProgressBar } from './ProgressBar'
 import { SearchBar } from './SearchBar'
 
 export const MainScreen = () => {
-    const refreshTime = 30000 //How frequently you want to refresh the data, in ms
+    const refreshTime = 30000 // How frequently you want to refresh the data, in ms
     const [loading, setLoading] = useState(false)
     const [vault, setVault] = useState([] as any)
 
     const fetchData = async () => {
-        const { data, error } = await sbClient.from('vaults').select()
-        if (error) return toast.error(error.message)
-        setVault(await parseVaults(data))
-        setLoading(false)
+        // TODO: add caching to improve performance.
+        // Load data in local database.
+        await fetchVaults()
+            .then(async (resp: any) => {
+                const vaultData = await parseVaults(resp.data)
+                return setVault(vaultData)
+            })
+            .catch((error) => {
+                setLoading(false)
+                toast.error(error.message)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     useEffect(() => {

@@ -8,6 +8,7 @@ import { useAuth } from './hooks/useAuth'
 import { MainScreen } from './components/MainScren'
 import { AuthScreen } from './components/AuthScreen'
 import { useStores } from './stores/stores'
+import { localData } from './utils/storage'
 
 function App() {
     const session = useAuth()
@@ -23,9 +24,7 @@ function App() {
         disableBrowserEvents('selectstart')
 
         const fetchData = async () => {
-            if (session) {
-                await appWindow.emit('window-loaded', { loggedIn: true, token: session.access_token })
-            }
+            if (session) await localData.set('session', session)
         }
 
         fetchData().catch(console.error)
