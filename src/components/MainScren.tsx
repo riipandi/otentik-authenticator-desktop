@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useStores } from '../stores/stores'
 
 import { parseVaults } from '../utils/helpers'
 import { sbClient } from '../utils/supabase'
@@ -13,26 +12,24 @@ import { ProgressBar } from './ProgressBar'
 import { SearchBar } from './SearchBar'
 
 export const MainScreen = () => {
+    const refreshTime = 30000 //How frequently you want to refresh the data, in ms
     const [loading, setLoading] = useState(false)
-    const [count, setCount] = useState(0)
-    const [startCount, setStartCount] = useState(false)
     const [vault, setVault] = useState([] as any)
 
     const fetchData = async () => {
         const { data, error } = await sbClient.from('vaults').select()
         if (error) return toast.error(error.message)
         setVault(await parseVaults(data))
+        setLoading(false)
     }
 
     useEffect(() => {
-        // if (startCount) {
-        const intervalId = setInterval(() => {
+        fetchData()
+        const interval = setInterval(() => {
             fetchData()
-        }, 30000) // in milliseconds
-        // console.info(`Refreshing tokens in ${intervalId} second(s)`)
-        // setCount(intervalId / 20000)
-        return () => clearInterval(intervalId)
-        // }
+        }, refreshTime)
+
+        return () => clearInterval(interval)
     }, [vault])
 
     return (

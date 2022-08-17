@@ -32,6 +32,7 @@ export const FormCreate = () => {
                 issuer: issuer,
                 user_identity: userIdentity,
                 secret_key: secretKey,
+                backup_code: backupCode,
                 algorithm: 'SHA1',
                 token_type: 'TOTP',
                 period: 30,
@@ -42,7 +43,7 @@ export const FormCreate = () => {
         if (error) {
             setLoading(false)
             setErrorMsg({ error: true, text: error.message })
-            return toast.error(error.message)
+            return toast.error(errorMsg.text)
         } else if (data) {
             setLoading(false)
             setErrorMsg({ error: true, text: 'Item already exists!' })
