@@ -1,0 +1,14 @@
+.cache/
+.turbo/
+.vscode/
+.next/
+.vercel/
+node_modules/
+src-tauri/
+public/
+build/
+dist/
+out/
+package-lock.json
+package.json
+yarn.lock

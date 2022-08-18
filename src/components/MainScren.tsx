@@ -12,43 +12,43 @@ import { ProgressBar } from './ProgressBar'
 import { SearchBar } from './SearchBar'
 
 export const MainScreen = () => {
-    const refreshTime = 30000 // How frequently you want to refresh the data, in ms
-    const [loading, setLoading] = useState(false)
-    const [collection, setCollection] = useState([] as any)
+  const refreshTime = 30000 // How frequently you want to refresh the data, in ms
+  const [loading, setLoading] = useState(false)
+  const [collection, setCollection] = useState([] as any)
 
-    const fetchData = async () => {
-        // TODO: add caching to improve performance.
-        const { data, error } = await fetchCollections()
+  const fetchData = async () => {
+    // TODO: add caching to improve performance.
+    const { data, error } = await fetchCollections()
 
-        if (error) {
-            setLoading(false)
-            toast.error(error.message)
-        }
-
-        const collectionData = await parseCollections(data || [])
-        setCollection(collectionData)
-        setLoading(false)
+    if (error) {
+      setLoading(false)
+      toast.error(error.message)
     }
 
-    useEffect(() => {
-        fetchData()
-        const interval = setInterval(() => {
-            fetchData()
-        }, refreshTime)
+    const collectionData = await parseCollections(data || [])
+    setCollection(collectionData)
+    setLoading(false)
+  }
 
-        return () => clearInterval(interval)
-    }, [collection])
+  useEffect(() => {
+    fetchData()
+    const interval = setInterval(() => {
+      fetchData()
+    }, refreshTime)
 
-    return (
-        <>
-            <AppMenu />
-            <LockScreen />
-            <SearchBar />
-            <ProgressBar percentage={100} />
-            <div className='relative -mx-1 h-[520px] overflow-y-auto overscroll-auto bg-gray-50 p-0 pt-14 scrollbar-hide dark:bg-gray-900'>
-                <ItemsList data={collection} loading={loading} />
-            </div>
-            <FormCreate />
-        </>
-    )
+    return () => clearInterval(interval)
+  }, [collection])
+
+  return (
+    <>
+      <AppMenu />
+      <LockScreen />
+      <SearchBar />
+      <ProgressBar percentage={100} />
+      <div className='relative -mx-1 h-[520px] overflow-y-auto overscroll-auto bg-gray-50 p-0 pt-14 scrollbar-hide dark:bg-gray-900'>
+        <ItemsList data={collection} loading={loading} />
+      </div>
+      <FormCreate />
+    </>
+  )
 }

@@ -1,27 +1,40 @@
 import { faker } from '@faker-js/faker'
-import { sortObjectsByProp, groupArrayObjectByAlphabet } from './utils/array-helpers'
+import {
+  sortObjectsByProp,
+  groupArrayObjectByAlphabet,
+} from './utils/array-helpers'
 import { generateTOTP } from './utils/string-helpers'
 
 const generateMock = async (count: number): Promise<any> => {
-    const result = []
+  const result = []
 
-    for (let i = 0; i < count; i++) {
-        const id = faker.datatype.uuid()
-        const issuer = faker.internet.domainName()
-        const user_identity = faker.internet.email().toLowerCase()
-        const secret = faker.random.alphaNumeric(40)
-        const algorithm = 'SHA1'
-        const token_type = 'TOTP'
-        const period = 30
-        const digits = 6
+  for (let i = 0; i < count; i++) {
+    const id = faker.datatype.uuid()
+    const issuer = faker.internet.domainName()
+    const user_identity = faker.internet.email().toLowerCase()
+    const secret = faker.random.alphaNumeric(40)
+    const algorithm = 'SHA1'
+    const token_type = 'TOTP'
+    const period = 30
+    const digits = 6
 
-        // Create a new TOTP object.
-        const token = await generateTOTP({ secret, period, digits, algorithm })
+    // Create a new TOTP object.
+    const token = await generateTOTP({ secret, period, digits, algorithm })
 
-        result.push({ id, issuer, user_identity, token, secret, algorithm, token_type, period, digits })
-    }
+    result.push({
+      id,
+      issuer,
+      user_identity,
+      token,
+      secret,
+      algorithm,
+      token_type,
+      period,
+      digits,
+    })
+  }
 
-    return result
+  return result
 }
 
 // Unsorted mock data.

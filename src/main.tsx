@@ -5,8 +5,8 @@ import App from './App'
 import './main.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-        <App />
-        <ToastMessage />
-    </React.StrictMode>
+  <React.StrictMode>
+    <App />
+    <ToastMessage />
+  </React.StrictMode>,
 )
