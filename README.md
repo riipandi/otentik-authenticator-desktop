@@ -9,8 +9,8 @@
     <a href="https://choosealicense.com/licenses/apache-2.0">
         <img src="https://img.shields.io/github/license/riipandi/otentik-authenticator-desktop?style=flat-square" alt="License">
     </a>
-    <a href="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/publish.yml">
-        <img src="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/publish.yml/badge.svg?branch=main" alt="Build Status">
+    <a href="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/release.yml">
+        <img src="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/release.yml/badge.svg?branch=main" alt="Release Status">
     </a>
     <a href="https://github.com/sponsors/riipandi">
         <img src="https://img.shields.io/static/v1?color=26B643&label=Sponsor&message=%E2%9D%A4&logo=GitHub&style=flat-square" alt="Sponsors">

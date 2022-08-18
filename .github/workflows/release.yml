@@ -1,4 +1,4 @@
-name: 'publish'
+name: 'release'
 # on: pull_request
 on:
   push:
@@ -66,11 +66,11 @@ jobs:
     #     sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
     - name: install app dependencies and build it
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       run: yarn && yarn build
     - uses: tauri-apps/tauri-action@v0
+      # args: --target x86_64
       # args: --target aarch64
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
