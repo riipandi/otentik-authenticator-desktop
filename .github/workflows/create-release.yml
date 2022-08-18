@@ -15,16 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # platform: [macos-latest, windows-latest, ubuntu-latest]
-        platform: [macos-latest, windows-latest]
-        include:
-          # - os: ubuntu-latest
-          #   rust_target: x86_64-unknown-linux-gnu
-          - os: macos-latest
-            rust_target: x86_64-apple-darwin
-          - os: macos-latest
-            rust_target: aarch64-apple-darwin
-          - os: windows-latest
-            rust_target: x86_64-pc-windows-msvc
+        platform: [macos-x64, macos-ARM64, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -35,7 +26,6 @@ jobs:
           node-version: 16
       - name: install Rust stable
         uses: actions-rs/toolchain@v1
-        run: rustup target add ${{ matrix.rust_target }}
         with:
           toolchain: stable
       # - name: install dependencies (ubuntu only)
@@ -50,8 +40,6 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        with:
-          target: ${{ matrix.rust_target }}
       # The `artifacts` output can now be used by a different action to upload the artifacts
       - uses: actions/upload-artifact@v3
         with:
