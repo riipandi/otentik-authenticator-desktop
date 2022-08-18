@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useStores } from '~/stores/stores'
 
 import { parseCollections } from '../utils/array-helpers'
 import { fetchCollections } from '../utils/supabase'
@@ -15,6 +16,9 @@ export const MainScreen = () => {
   const refreshTime = 30000 // How frequently you want to refresh the data, in ms
   const [loading, setLoading] = useState(false)
   const [collection, setCollection] = useState([] as any)
+
+  const forceFetch = useStores((state) => state.forceFetch)
+  const setForceFetch = useStores((state) => state.setForceFetch)
 
   const fetchData = async () => {
     // TODO: add caching to improve performance.
@@ -38,6 +42,11 @@ export const MainScreen = () => {
 
     return () => clearInterval(interval)
   }, [collection])
+
+  if (forceFetch) {
+    fetchData()
+    setForceFetch(false)
+  }
 
   return (
     <>

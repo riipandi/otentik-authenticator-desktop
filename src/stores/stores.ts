@@ -5,7 +5,9 @@ import { persist } from 'zustand/middleware'
 interface IStores {
   locked: boolean
   formCreateOpen: boolean
+  forceFetch: boolean
   setLockStreenState: (status: boolean) => void
+  setForceFetch: (status: boolean) => void
   setFormCreateOpen: (status: boolean) => void
 }
 
@@ -14,8 +16,11 @@ export const useStores = create<IStores>()(
     (set) => ({
       locked: true,
       formCreateOpen: false,
+      forceFetch: false,
       setLockStreenState: (status) =>
         set((state) => ({ locked: (state.locked = status) })),
+      setForceFetch: (status) =>
+        set((state) => ({ forceFetch: (state.forceFetch = status) })),
       setFormCreateOpen: (status) =>
         set((state) => ({
           formCreateOpen: (state.formCreateOpen = status),
