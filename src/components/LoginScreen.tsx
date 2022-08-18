@@ -4,6 +4,7 @@ import { sbClient } from '../utils/supabase'
 import { LoaderScreen } from './LoaderScreen'
 import { classNames } from '../utils/helpers'
 import toast from 'react-hot-toast'
+import { AppLogo } from './AppLogo'
 
 export const LoginScreen = () => {
     const [loading, setLoading] = useState(false)
@@ -74,11 +75,7 @@ export const LoginScreen = () => {
         >
             <div className='w-full max-w-sm'>
                 <div>
-                    <img
-                        className={classNames(actionIsLogin ? 'h-12' : 'h-8', 'mx-auto w-auto')}
-                        src='/app-logo-wide.svg'
-                        alt='Authenticator'
-                    />
+                    <AppLogo className={classNames(actionIsLogin ? 'h-12' : 'h-8', 'mx-auto w-auto')} />
                     <h2 className='mt-8 text-center text-xl font-semibold tracking-tight text-white'>
                         {actionIsLogin ? 'Sign in to continue' : 'Create account'}
                     </h2>
