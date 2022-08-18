@@ -18,19 +18,16 @@ export const MainScreen = () => {
 
     const fetchData = async () => {
         // TODO: add caching to improve performance.
-        // Load data in local database.
-        await fetchCollections()
-            .then(async (resp: any) => {
-                const collectionData = await parseCollections(resp.data)
-                return setCollection(collectionData)
-            })
-            .catch((error) => {
-                setLoading(false)
-                toast.error(error.message)
-            })
-            .finally(() => {
-                setLoading(false)
-            })
+        const { data, error } = await fetchCollections()
+
+        if (error) {
+            setLoading(false)
+            toast.error(error.message)
+        }
+
+        const collectionData = await parseCollections(data || [])
+        setCollection(collectionData)
+        setLoading(false)
     }
 
     useEffect(() => {

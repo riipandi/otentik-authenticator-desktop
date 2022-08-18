@@ -18,7 +18,7 @@ export const ToastMessage = () => {
                 >
                     <ToastIcon toast={t} />
                     {/* @ts-ignore */}
-                    <p className='px-2'>{resolveValue(t.message)}</p>
+                    <p className='px-2 text-sm'>{resolveValue(t.message)}</p>
                 </Transition>
             )}
         </Toaster>

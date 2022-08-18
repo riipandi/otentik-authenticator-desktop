@@ -3,25 +3,30 @@ import { Dialog } from '@headlessui/react'
 import { toast } from 'react-hot-toast'
 
 import { useStores } from '../stores/stores'
-import { sbClient } from '../utils/supabase'
+import { addSingleCollection } from '../utils/supabase'
 import { DialogTransition } from './DialogTransition'
 import { classNames } from '../utils/ui-helpers'
-import { isAlphaNumeric } from '../utils/string-helpers'
+import { encryptStr, isAlphaNumeric } from '../utils/string-helpers'
 import { useAuth } from '../hooks/useAuth'
 
 export const FormCreate = () => {
     const session = useAuth()
     const [loading, setLoading] = useState(false)
-    const [errorMsg, setErrorMsg] = useState<any>({ error: null, text: null })
-
     const formCreateOpen = useStores((state) => state.formCreateOpen)
     const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
     const cancelButtonRef = useRef(null)
 
-    const [issuer, setIssuer] = useState('')
+    const [issuerName, setIssuerName] = useState('')
     const [userIdentity, setUserIdentity] = useState('')
     const [secretKey, setSecretKey] = useState('')
     const [backupCode, setBackupCode] = useState('')
+
+    const resetForm = () => {
+        setIssuerName('')
+        setUserIdentity('')
+        setSecretKey('')
+        setBackupCode('')
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -29,35 +34,45 @@ export const FormCreate = () => {
 
         // Check if secret key is valid (at least 120 bits in length)
         if (secretKey.length < 16 || !isAlphaNumeric(secretKey)) {
-            const msg = 'Secret key must be alphanumeric and at least 16 characters long!'
-            setErrorMsg({ error: 'Invalid secret key', text: msg })
-            toast.error(msg)
+            toast.error('Secret key must be alphanumeric and at least 16 characters long!')
             return setLoading(false)
         }
 
-        const { error } = await sbClient
-            .from('collections')
-            .insert({
-                user_id: session?.user?.id,
-                issuer: issuer,
-                user_identity: userIdentity,
-                secret_key: secretKey,
-                backup_code: backupCode,
-                algorithm: 'SHA1',
-                token_type: 'TOTP',
-                period: 30,
-                digits: 6,
-            })
-            .single()
+        // Encrypt sensitive data with user's master key
+        const issuer = await encryptStr(issuerName)
+        const user_identity = await encryptStr(userIdentity)
+        const secret_key = await encryptStr(secretKey)
+        const backup_code = await encryptStr(backupCode)
 
-        if (error) {
-            setLoading(false)
-            setErrorMsg({ error: true, text: error.message })
-            return toast.error(errorMsg.text)
-        }
+        const { data, error } = await addSingleCollection({
+            user_id: session?.user?.id,
+            issuer,
+            user_identity,
+            secret_key,
+            backup_code,
+            algorithm: 'SHA1',
+            token_type: 'TOTP',
+            period: 30,
+            digits: 6,
+        })
 
         setLoading(false)
+
+        if (error) {
+            return toast.error(error.message)
+        }
+
+        if (error && data) {
+            return toast.error('Item already exists!')
+        }
+
         toast.success('Item saved!')
+        setFormCreateOpen(false)
+        resetForm()
+    }
+
+    const handleCancel = () => {
+        resetForm()
         setFormCreateOpen(false)
     }
 
@@ -70,16 +85,17 @@ export const FormCreate = () => {
                 <form onSubmit={handleSubmit}>
                     <div className='space-y-3'>
                         <div>
-                            <label htmlFor='issuer' className='px-0.5 text-sm font-medium text-gray-600'>
+                            <label htmlFor='issuer-name' className='px-0.5 text-sm font-medium text-gray-600'>
                                 Service name / issuer
                             </label>
                             <div className='mt-1'>
                                 <input
-                                    id='issuer'
-                                    name='issuer'
+                                    id='issuer-name'
+                                    name='issuer_name'
                                     type='text'
                                     className='w-full rounded-md border border-gray-200 p-2 text-sm  placeholder-gray-400 hover:shadow focus:border-gray-500 focus:outline-none'
-                                    onChange={(e) => setIssuer(e.target.value)}
+                                    onChange={(e) => setIssuerName(e.target.value)}
+                                    defaultValue={issuerName}
                                     placeholder='Google'
                                     required
                                 />
@@ -99,6 +115,7 @@ export const FormCreate = () => {
                                     type='text'
                                     className='w-full rounded-md border border-gray-200 p-2 text-sm placeholder-gray-400 hover:shadow focus:border-gray-500 focus:outline-none'
                                     onChange={(e) => setUserIdentity(e.target.value)}
+                                    defaultValue={userIdentity}
                                     placeholder={session?.user?.email}
                                     required
                                 />
@@ -115,6 +132,7 @@ export const FormCreate = () => {
                                     type='text'
                                     className='w-full rounded-md border border-gray-200 p-2 text-sm  placeholder-gray-400 hover:shadow focus:border-gray-500 focus:outline-none'
                                     onChange={(e) => setSecretKey(e.target.value)}
+                                    defaultValue={secretKey}
                                     required
                                 />
                             </div>
@@ -130,6 +148,7 @@ export const FormCreate = () => {
                                     name='backup_code'
                                     className='block w-full rounded-md border-gray-300 placeholder-gray-400 shadow-sm  focus:border-primary-500 focus:ring-primary-500 sm:text-sm'
                                     onChange={(e) => setBackupCode(e.target.value)}
+                                    defaultValue={backupCode}
                                 />
                             </div>
                         </div>
@@ -142,7 +161,7 @@ export const FormCreate = () => {
                                 loading ? 'bg-gray-100 text-gray-400 ' : 'bg-white text-gray-700',
                                 'inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-1.5 text-base font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm'
                             )}
-                            onClick={() => setFormCreateOpen(false)}
+                            onClick={handleCancel}
                             ref={cancelButtonRef}
                             disabled={loading}
                         >

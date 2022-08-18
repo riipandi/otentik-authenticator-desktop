@@ -1,4 +1,4 @@
-import { generateTOTP } from './string-helpers'
+import { decryptStr, generateTOTP } from './string-helpers'
 
 export interface ICollection {
     user_id: string
@@ -94,13 +94,33 @@ export function groupArrayObjectByAlphabetAsObject(arr: any[]) {
 // TODO: fix this types
 export async function parseCollections(data: any[]) {
     const arr = data.map(async (item) => {
+        // Decrypt sensitive data
+        const issuer = await decryptStr(item.issuer)
+        const user_identity = await decryptStr(item.user_identity)
+        const secret_key = await decryptStr(item.secret_key)
+        const backup_code = await decryptStr(item.backup_code)
+
+        // Generate TOTP token
         const token = await generateTOTP({
-            secret: item.secret_key,
+            secret: secret_key,
             period: item.period,
             digits: item.digits,
             algorithm: item.algorithm,
         })
-        return { ...item, token }
+
+        const result = {
+            issuer,
+            user_identity,
+            secret_key,
+            backup_code,
+            algorithm: item.algorithm,
+            token_type: item.token_type,
+            period: item.period,
+            digits: item.digits,
+            token,
+        }
+
+        return result
     })
 
     const newData = await Promise.all(arr)
