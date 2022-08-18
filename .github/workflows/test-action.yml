@@ -3,7 +3,7 @@ name: "test-on-pr"
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   test-tauri:
