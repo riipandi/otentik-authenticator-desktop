@@ -45,8 +45,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # platform: [macos-x64, macos-ARM64, windows-latest, ubuntu-20.04]
-        platform: [macos-ARM64]
+        # platform: [macos-latest, windows-latest, ubuntu-20.04]
+        platform: [macos-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
