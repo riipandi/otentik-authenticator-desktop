@@ -9,11 +9,10 @@
         "build": "tsc && vite build",
         "build:mac:arm": "tauri build --target aarch64-apple-darwin",
         "build:mac:x64": "tauri build --target x86_64-apple-darwin",
-        "lint": "npx eslint src",
+        "lint": "eslint src",
         "lint:fix": "npm run lint -- --fix",
         "prettier": "npx prettier src --check",
-        "prettier:fix": "npm run prettier -- --write",
-        "format": "npm run prettier:fix && npm run lint:fix",
+        "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"  && npm run lint:fix",
         "clean": "cd src-tauri && cargo clean",
         "preview": "vite preview",
         "tauri": "tauri"

@@ -12,3 +12,5 @@ out/
 package-lock.json
 package.json
 yarn.lock
+vite-env.d.ts
+src/main.css
