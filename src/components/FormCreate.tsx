@@ -42,7 +42,7 @@ export const FormCreate = () => {
         const issuer = await encryptStr(issuerName)
         const user_identity = await encryptStr(userIdentity)
         const secret_key = await encryptStr(secretKey)
-        const backup_code = await encryptStr(backupCode)
+        const backup_code = backupCode !== '' ? await encryptStr(backupCode) : null
 
         const { data, error } = await addSingleCollection({
             user_id: session?.user?.id,

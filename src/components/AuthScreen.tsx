@@ -18,6 +18,12 @@ export const AuthScreen = () => {
     const [password, setPassword] = useState('')
     const [realname, setRealName] = useState('')
 
+    const resetForm = () => {
+        setEmail('')
+        setPassword('')
+        setRealName('')
+    }
+
     const handleLogin = async () => {
         const { user, error } = await sbClient.auth.signIn({ email, password })
 
@@ -31,25 +37,18 @@ export const AuthScreen = () => {
         }
 
         setLoading(false)
+        resetForm()
     }
 
     const handleRegister = async () => {
         const passphrase = await createHash(password)
-        const { user, error } = await sbClient.auth.signUp(
-            { email, password },
-            {
-                data: {
-                    realname,
-                    passphrase,
-                },
-            }
-        )
+        const { error } = await sbClient.auth.signUp({ email, password }, { data: { realname, passphrase } })
 
         setLoading(false)
-
         if (error) return toast.error(error.message)
         toast.success('Check your email to verify your account!')
         setActionIsLogin(true)
+        resetForm()
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

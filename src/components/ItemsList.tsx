@@ -30,7 +30,9 @@ export const ItemsList: FC<ItemProps> = ({ data, loading }) => {
                     </div>
                     <ul role='list' className='relative z-0 divide-y divide-gray-200 dark:divide-gray-700'>
                         {data[letter].map((item: any) => (
-                            <ItemSingle item={item} />
+                            <li key={item.id} className='bg-gray-50 dark:bg-gray-900'>
+                                <ItemSingle item={item} />
+                            </li>
                         ))}
                     </ul>
                 </div>

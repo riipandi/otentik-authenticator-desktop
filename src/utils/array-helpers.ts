@@ -98,7 +98,7 @@ export async function parseCollections(data: any[]) {
         const issuer = await decryptStr(item.issuer)
         const user_identity = await decryptStr(item.user_identity)
         const secret_key = await decryptStr(item.secret_key)
-        const backup_code = await decryptStr(item.backup_code)
+        const backup_code = item.backup_code ? await decryptStr(item.backup_code) : null
 
         // Generate TOTP token
         const token = await generateTOTP({
