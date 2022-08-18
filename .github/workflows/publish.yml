@@ -1,4 +1,4 @@
-name: 'create-release'
+name: 'publish'
 # on: pull_request
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         # platform: [macos-x64, macos-ARM64, windows-latest, ubuntu-20.04]
-        platform: [macos-latest, windows-latest]
+        platform: [macos-ARM64]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -71,12 +71,18 @@ jobs:
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       run: yarn && yarn build
     - uses: tauri-apps/tauri-action@v0
+      # args: --target aarch64
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       with:
         releaseId: ${{ needs.create-release.outputs.release_id }}
+        tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+        releaseName: "App v__VERSION__"
+        releaseBody: "See the assets to download this version and install."
+        releaseDraft: true
+        prerelease: false
 
   publish-release:
     runs-on: ubuntu-20.04
