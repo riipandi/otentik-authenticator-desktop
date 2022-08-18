@@ -5,7 +5,8 @@ import { toast } from 'react-hot-toast'
 import { useStores } from '../stores/stores'
 import { sbClient } from '../utils/supabase'
 import { DialogTransition } from './DialogTransition'
-import { classNames, isAlphaNumeric } from '../utils/helpers'
+import { classNames } from '../utils/ui-helpers'
+import { isAlphaNumeric } from '../utils/string-helpers'
 import { useAuth } from '../hooks/useAuth'
 
 export const FormCreate = () => {
@@ -35,7 +36,7 @@ export const FormCreate = () => {
         }
 
         const { error } = await sbClient
-            .from('vaults')
+            .from('collections')
             .insert({
                 user_id: session?.user?.id,
                 issuer: issuer,

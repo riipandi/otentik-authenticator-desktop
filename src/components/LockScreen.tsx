@@ -4,21 +4,21 @@ import { EyeIcon, EyeOffIcon, LockClosedIcon } from '@heroicons/react/outline'
 import { ExclamationCircleIcon } from '@heroicons/react/solid'
 
 import { useAuth } from '../hooks/useAuth'
-import { sbClient } from '../utils/supabase'
-import { classNames } from '../utils/helpers'
 import { useStores } from '../stores/stores'
-import { LoaderScreen } from './LoaderScreen'
+import { classNames } from '../utils/ui-helpers'
 import { DialogTransition } from './DialogTransition'
+import { md5Hash, verifyHash } from '../utils/string-helpers'
+import { LoaderScreen } from './LoaderScreen'
+import { localData } from '../utils/storage'
 
 export const LockScreen = () => {
     const session = useAuth()
     const locked = useStores((state) => state.locked)
     const setLockStreenState = useStores((state) => state.setLockStreenState)
-
-    const [loading, setLoading] = useState(false)
     const [error, setError] = useState<any>({ error: null, text: null })
     const [passphrase, setPassphrase] = useState('')
     const [inputType, setInputType] = useState('password')
+    const [loading, setLoading] = useState(false)
 
     const handleShowHidePassword = () => {
         setInputType(inputType === 'password' ? 'text' : 'password')
@@ -32,16 +32,20 @@ export const LockScreen = () => {
         }
 
         setLoading(true)
-        const credentials = { email: session?.user?.email, password: passphrase }
-        const { error } = await sbClient.auth.signIn(credentials)
+        const passphraseHash = session?.user?.user_metadata?.passphrase
+        const validPassphrase = await verifyHash(passphrase, passphraseHash)
 
-        if (error) {
+        if (!validPassphrase) {
             setLoading(false)
-            return setError({ error: true, text: error.message })
+            return setError({ error: true, text: 'Invalid passphrase!' })
         }
 
-        setLoading(false)
+        // Store hashed passphrase in localStorage
+        const hashedPassphrase = await md5Hash(passphrase)
+        await localData.set('passphrase', hashedPassphrase)
+
         setError(null)
+        setLoading(false)
         setLockStreenState(false)
     }
 
@@ -61,7 +65,7 @@ export const LockScreen = () => {
                             </Dialog.Title>
                             <div className='mt-2'>
                                 <p className='text-sm text-gray-500'>
-                                    Enter your password to unlock the vault.
+                                    Enter your password to unlock the collection.
                                 </p>
                             </div>
 
@@ -120,7 +124,7 @@ export const LockScreen = () => {
                             type='submit'
                             className='inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:text-sm'
                         >
-                            Unlock vault
+                            Unlock collection
                         </button>
                     </div>
                 </form>

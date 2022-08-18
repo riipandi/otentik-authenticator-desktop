@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { classNames } from '../utils/helpers'
+import { classNames } from '../utils/ui-helpers'
 
 type ProgressBarProps = {
     percentage: number

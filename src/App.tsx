@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
-import { disableBrowserEvents } from './utils/helpers'
+import { disableBrowserEvents } from './utils/ui-helpers'
 import { useAuth } from './hooks/useAuth'
 
 import { MainScreen } from './components/MainScren'
 import { AuthScreen } from './components/AuthScreen'
 import { useStores } from './stores/stores'
 import { localData } from './utils/storage'
-import { OnboardScreen } from './components/OnboardScreen'
-import { sbClient } from './utils/supabase'
 
 function App() {
     const session = useAuth()

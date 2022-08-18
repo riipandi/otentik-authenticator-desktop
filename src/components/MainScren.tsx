@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { parseVaults } from '../utils/helpers'
-import { fetchVaults } from '../utils/supabase'
+import { parseCollections } from '../utils/array-helpers'
+import { fetchCollections } from '../utils/supabase'
 
 import { AppMenu } from './AppMenu'
 import { FormCreate } from './FormCreate'
@@ -14,15 +14,15 @@ import { SearchBar } from './SearchBar'
 export const MainScreen = () => {
     const refreshTime = 30000 // How frequently you want to refresh the data, in ms
     const [loading, setLoading] = useState(false)
-    const [vault, setVault] = useState([] as any)
+    const [collection, setCollection] = useState([] as any)
 
     const fetchData = async () => {
         // TODO: add caching to improve performance.
         // Load data in local database.
-        await fetchVaults()
+        await fetchCollections()
             .then(async (resp: any) => {
-                const vaultData = await parseVaults(resp.data)
-                return setVault(vaultData)
+                const collectionData = await parseCollections(resp.data)
+                return setCollection(collectionData)
             })
             .catch((error) => {
                 setLoading(false)
@@ -40,7 +40,7 @@ export const MainScreen = () => {
         }, refreshTime)
 
         return () => clearInterval(interval)
-    }, [vault])
+    }, [collection])
 
     return (
         <>
@@ -49,7 +49,7 @@ export const MainScreen = () => {
             <SearchBar />
             <ProgressBar percentage={100} />
             <div className='relative -mx-1 h-[520px] overflow-y-auto overscroll-auto bg-gray-50 p-0 pt-14 scrollbar-hide dark:bg-gray-900'>
-                <ItemsList data={vault} loading={loading} />
+                <ItemsList data={collection} loading={loading} />
             </div>
             <FormCreate />
         </>

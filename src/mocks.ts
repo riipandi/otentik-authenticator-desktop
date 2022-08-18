@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
-import { sortObjectsByProp, generateTOTP, groupArrayObjectByAlphabet } from './utils/helpers'
+import { sortObjectsByProp, groupArrayObjectByAlphabet } from './utils/array-helpers'
+import { generateTOTP } from './utils/string-helpers'
 
 const generateMock = async (count: number): Promise<any> => {
     const result = []
@@ -30,5 +31,5 @@ export const randomData = await generateMock(100)
 export const sortedData = sortObjectsByProp(randomData, 'issuer')
 
 // Group array by the alphabetical key of the name key
-export const vaultGrouped = groupArrayObjectByAlphabet(sortedData)
-// export const vaultGrouped = {}
+export const collectionGrouped = groupArrayObjectByAlphabet(sortedData)
+// export const collectionGrouped = {}

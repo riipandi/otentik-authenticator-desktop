@@ -1,6 +1,8 @@
 extern crate bcrypt;
+extern crate easy_hasher;
 
 use bcrypt::{hash, verify, DEFAULT_COST};
+use easy_hasher::easy_hasher::*;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 
 #[tauri::command]
@@ -27,4 +29,11 @@ pub(crate) async fn create_hash(plaintext: String) -> String {
 pub(crate) async fn verify_hash(plaintext: String, hashed_str: String) -> bool {
     let valid = verify(plaintext, &hashed_str).unwrap();
     valid.into()
+}
+
+#[tauri::command]
+pub(crate) async fn md5_hash(str: String) -> String {
+    let hash = md5(&str);
+    let string_hash = hash.to_hex_string();
+    string_hash.into()
 }

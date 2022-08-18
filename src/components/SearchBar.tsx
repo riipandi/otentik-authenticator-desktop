@@ -17,7 +17,7 @@ export const SearchBar = () => {
                     name='search'
                     ref={searchInputRef}
                     className='block w-full rounded-md border border-transparent bg-gray-800 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-gray-700 focus:bg-gray-700 focus:text-gray-100 focus:outline-none focus:ring-gray-700'
-                    placeholder='Search (cmd+f)'
+                    placeholder='Search item'
                     type='search'
                 />
             </div>

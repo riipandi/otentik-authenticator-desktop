@@ -83,6 +83,7 @@ fn main() {
             security::decrypt_str,
             security::create_hash,
             security::verify_hash,
+            security::md5_hash,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

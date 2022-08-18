@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { LockClosedIcon, CogIcon, LogoutIcon, DocumentAddIcon, XCircleIcon } from '@heroicons/react/outline'
 import { MenuIcon } from '@heroicons/react/solid'
@@ -7,7 +7,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'react-hot-toast'
 
 import { useStores } from '../stores/stores'
-import { classNames } from '../utils/helpers'
+import { classNames } from '../utils/ui-helpers'
 import { sbClient } from '../utils/supabase'
 import { MenuDivider } from './MenuDivider'
 
@@ -85,7 +85,7 @@ export const AppMenu = () => {
                                             )}
                                             onClick={() => toast.error('Not yet implemented!')}
                                         >
-                                            <span>Preferences</span>
+                                            <span>Sync Vault</span>
                                             <CogIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />
                                         </button>
                                     )}
