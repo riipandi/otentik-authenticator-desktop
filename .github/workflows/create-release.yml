@@ -15,7 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         # platform: [macos-latest, windows-latest, ubuntu-latest]
-        platform: [macos-x64, macos-ARM64, windows-latest]
+        # platform: [macos-x64, macos-ARM64, windows-latest]
+        platform: [macos-x64]
 
     runs-on: ${{ matrix.platform }}
     steps:
