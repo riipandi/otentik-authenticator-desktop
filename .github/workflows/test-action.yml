@@ -1,4 +1,4 @@
-name: "Test Build"
+name: "test-build"
 # on: [pull_request]
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         # platform: [macos-latest, ubuntu-20.04, windows-latest]
-        platform: [macos-latest, windows-latest]
+        platform: [macos-latest, windows-latest, x64, ARM64]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -33,6 +33,6 @@ jobs:
       run: yarn && yarn build
     - uses: tauri-apps/tauri-action@v0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
