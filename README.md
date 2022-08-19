@@ -18,9 +18,9 @@
 
 Feeling bothered about having to switch devices when you want to enter an OTP code when logging into a website or service?
 Now you can use Otentik Authenticator to manage your OTP code. Otentik is a secure app to manage your 2-step verification (2FA)
-tokens for your online services.
+tokens for your online services. This app compatible with Google Authenticator.
 
-Watch the [demo video](https://www.youtube.com/) to see how it works.
+Watch the [demo video](https://youtu.be/5hPbu7xgFl4) to see how it works.
 
 This project is an Open Source project for contributing to [The Supabase Open Source Hackathon](https://supabase.com/blog/launch-week-5-hackathon).
 
