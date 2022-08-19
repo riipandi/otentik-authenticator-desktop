@@ -74,6 +74,7 @@ For detailed explanation on how things work, check out [Supabase documentation](
 
 ## Roadmaps
 
+-   [ ] Account management
 -   [ ] Offline synchronization
 -   [ ] Create mobile version
 -   [ ] Create Windows version
