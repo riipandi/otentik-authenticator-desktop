@@ -10,7 +10,6 @@ import {
 import { MenuIcon } from '@heroicons/react/solid'
 import { appWindow } from '@tauri-apps/api/window'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { toast } from 'react-hot-toast'
 
 import { useStores } from '../stores/stores'
 import { classNames } from '../utils/ui-helpers'
@@ -23,6 +22,7 @@ export const AppMenu = () => {
   const locked = useStores((state) => state.locked)
   const setLockStreenState = useStores((state) => state.setLockStreenState)
   const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
+  const setForceFetch = useStores((state) => state.setForceFetch)
 
   // Reset all states before quit.
   const resetStates = () => {
@@ -89,7 +89,7 @@ export const AppMenu = () => {
                         active ? 'bg-gray-100 dark:bg-gray-500' : '',
                         'inline-flex w-full items-center justify-between px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-100',
                       )}
-                      onClick={() => toast.error('Not yet implemented!')}
+                      onClick={() => setForceFetch(true)}
                     >
                       <span>Sync Vault</span>
                       <CogIcon className='h-4 w-4 text-gray-500 dark:text-gray-300' />

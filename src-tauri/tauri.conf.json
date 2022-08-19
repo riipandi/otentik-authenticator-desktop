@@ -12,15 +12,7 @@
     },
     "tauri": {
         "allowlist": {
-            "all": true,
-            "http": {
-                "all": true,
-                "request": true,
-                "scope": [
-                    "https://api.github.com/repos/riipandi/otentik-authenticator-desktop/*",
-                    "https://gxuxlaprbhycqtqendpl.supabase.co/*"
-                ]
-            }
+            "all": true
         },
         "systemTray": {
             "iconPath": "icons/tray-256.png",
@@ -29,7 +21,7 @@
         "bundle": {
             "active": true,
             "category": "Utility",
-            "copyright": "",
+            "copyright": "Copyright © 2022 Aris Ripandi",
             "deb": {
                 "depends": []
             },
@@ -38,7 +30,6 @@
             "identifier": "app.otentik.authenticator",
             "longDescription": "Open Source two factor authenticator",
             "macOS": {
-                "entitlements": null,
                 "exceptionDomain": "",
                 "frameworks": [],
                 "providerShortName": null,
@@ -50,14 +41,22 @@
             "windows": {
                 "certificateThumbprint": null,
                 "digestAlgorithm": "sha256",
-                "timestampUrl": ""
+                "timestampUrl": "",
+                "wix": {
+                    "enableElevatedUpdateTask": false
+                }
             }
         },
         "security": {
             "csp": null
         },
         "updater": {
-            "active": false
+            "active": false,
+            "dialog": false,
+            "pubkey": "YOUR_UPDATER_SIGNATURE_PUBKEY_HERE",
+            "endpoints": [
+                "https://otentik.app/api/release/{{target}}/{{current_version}}"
+            ]
         },
         "windows": [
             {

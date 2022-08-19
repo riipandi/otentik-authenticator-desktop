@@ -31,8 +31,8 @@ jobs:
             const { data } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: `app-v${process.env.PACKAGE_VERSION}`,
-              name: `Desktop App v${process.env.PACKAGE_VERSION}`,
+              tag_name: `v${process.env.PACKAGE_VERSION}`,
+              name: `Authenticator v${process.env.PACKAGE_VERSION}`,
               body: 'Take a look at the assets to download and install this app.',
               draft: true,
               prerelease: false
@@ -78,11 +78,6 @@ jobs:
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       with:
         releaseId: ${{ needs.create-release.outputs.release_id }}
-        tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-        releaseName: "App v__VERSION__"
-        releaseBody: "See the assets to download this version and install."
-        releaseDraft: true
-        prerelease: false
 
   publish-release:
     runs-on: ubuntu-20.04

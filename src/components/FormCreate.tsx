@@ -14,6 +14,7 @@ export const FormCreate = () => {
   const [loading, setLoading] = useState(false)
   const formCreateOpen = useStores((state) => state.formCreateOpen)
   const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
+  const setForceFetch = useStores((state) => state.setForceFetch)
   const cancelButtonRef = useRef(null)
 
   const [issuerName, setIssuerName] = useState('')
@@ -46,7 +47,7 @@ export const FormCreate = () => {
     const secret_key = await encryptStr(secretKey)
     const backup_code = backupCode !== '' ? await encryptStr(backupCode) : null
 
-    const { data, error } = await addSingleCollection({
+    const { error } = await addSingleCollection({
       user_id: session?.user?.id,
       issuer,
       user_identity,
@@ -61,15 +62,15 @@ export const FormCreate = () => {
     setLoading(false)
 
     if (error) {
+      if (parseInt(error.code) === 23505) {
+        return toast.error('Item already exists!')
+      }
       return toast.error(error.message)
-    }
-
-    if (error && data) {
-      return toast.error('Item already exists!')
     }
 
     toast.success('Item saved!')
     setFormCreateOpen(false)
+    setForceFetch(true)
     resetForm()
   }
 

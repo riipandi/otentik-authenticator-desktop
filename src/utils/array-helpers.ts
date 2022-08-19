@@ -118,6 +118,7 @@ export async function parseCollections(data: any[]) {
     })
 
     const result = {
+      id: item.id,
       issuer,
       user_identity,
       secret_key,

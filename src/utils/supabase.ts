@@ -5,16 +5,18 @@ export const VITE_SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const sbClient = createClient(VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
 
-export const fetchCollections = async () => {
-  return await sbClient.from('vaults').select()
-}
+export const userProfile = sbClient.from('users_profiles')
 
 export const addSingleCollection = async (data: any) => {
   return await sbClient.from('vaults').insert(data).single()
 }
 
+export const fetchVault = async () => {
+  return await sbClient.from('vaults').select()
+}
+
 export const fetchPassphrase = async (userId: string, passphrase: string) => {
-  return await sbClient.from('users_profiles').select('passphrase').match({
+  return await userProfile.select('passphrase').match({
     id: userId,
     passphrase,
   })

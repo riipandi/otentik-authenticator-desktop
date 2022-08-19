@@ -1,11 +1,10 @@
 [package]
-name = "app"
+name = "otentik-authenticator"
 version = "0.1.0"
 description = "Open Source two factor authenticator"
 authors = ["Aris Ripandi <aris@duck.com>"]
 license = "Apache-2.0"
-repository = "https://github.com/feelantera/otentik-authenticator-desktop"
-default-run = "app"
+repository = "https://github.com/riipandi/otentik-authenticator-desktop"
 edition = "2021"
 rust-version = "1.63"
 
@@ -38,3 +37,15 @@ default = [ "custom-protocol" ]
 # this feature is used used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
 custom-protocol = [ "tauri/custom-protocol" ]
+
+[[bin]]
+name = "otentik-authenticator"
+path = "src/main.rs"
+
+# default to small, optimized release binaries
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+incremental = false
+opt-level = "s"

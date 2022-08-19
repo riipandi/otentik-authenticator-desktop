@@ -66,25 +66,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c794e162a5eff65c72ef524dfe393eb923c354e350bb78b9c7383df13f3bc142"
 
 [[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "bcrypt",
- "binascii",
- "cocoa",
- "easy-hasher",
- "libreauth",
- "magic-crypt",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-store",
- "window-shadows",
- "window-vibrancy",
-]
-
-[[package]]
 name = "arrayref"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2190,6 +2171,25 @@ checksum = "2c92f2b54f081d635c77e7120862d48db8e91f7f21cef23ab1b4fe9971c59f55"
 dependencies = [
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "otentik-authenticator"
+version = "0.1.0"
+dependencies = [
+ "bcrypt",
+ "binascii",
+ "cocoa",
+ "easy-hasher",
+ "libreauth",
+ "magic-crypt",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-store",
+ "window-shadows",
+ "window-vibrancy",
 ]
 
 [[package]]

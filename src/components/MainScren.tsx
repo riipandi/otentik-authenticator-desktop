@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useStores } from '~/stores/stores'
 
 import { parseCollections } from '../utils/array-helpers'
-import { fetchCollections } from '../utils/supabase'
+import { fetchVault } from '../utils/supabase'
 
 import { AppMenu } from './AppMenu'
 import { FormCreate } from './FormCreate'
@@ -16,9 +17,12 @@ export const MainScreen = () => {
   const [loading, setLoading] = useState(false)
   const [collection, setCollection] = useState([] as any)
 
+  const forceFetch = useStores((state) => state.forceFetch)
+  const setForceFetch = useStores((state) => state.setForceFetch)
+
   const fetchData = async () => {
     // TODO: add caching to improve performance.
-    const { data, error } = await fetchCollections()
+    const { data, error } = await fetchVault()
 
     if (error) {
       setLoading(false)
@@ -38,6 +42,11 @@ export const MainScreen = () => {
 
     return () => clearInterval(interval)
   }, [collection])
+
+  if (forceFetch) {
+    fetchData()
+    setForceFetch(false)
+  }
 
   return (
     <>
