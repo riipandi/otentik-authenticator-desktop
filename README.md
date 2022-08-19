@@ -63,7 +63,8 @@ The simple answer is: the binary file size is smaller rather than Electron.
 ### Prerequisites
 
 At least you will need `Nodejs >=16` and `Rust >= 1.63` to develop this project, and your favorite IDE or code editor.
-Use [rustup](https://rustup.rs/) to install Rust on your machine.
+Use [rustup](https://rustup.rs/) to install Rust on your machine. Also, if you want to run Supabase instance at your
+local machine, you will need `Docker >= 20.10` and [Supabase CLI](https://github.com/supabase/cli).
 
 ### Up and Running
 
