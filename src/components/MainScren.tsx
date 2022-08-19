@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast'
 import { useStores } from '~/stores/stores'
 
 import { parseCollections } from '../utils/array-helpers'
-import { fetchCollections } from '../utils/supabase'
+import { fetchVault } from '../utils/supabase'
 
 import { AppMenu } from './AppMenu'
 import { FormCreate } from './FormCreate'
@@ -22,7 +22,7 @@ export const MainScreen = () => {
 
   const fetchData = async () => {
     // TODO: add caching to improve performance.
-    const { data, error } = await fetchCollections()
+    const { data, error } = await fetchVault()
 
     if (error) {
       setLoading(false)

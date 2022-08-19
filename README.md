@@ -3,14 +3,11 @@
     <a href="https://github.com/riipandi/otentik-authenticator-desktop/pulse">
         <img src="https://img.shields.io/badge/Contributions-welcome-blue.svg?style=flat-square" alt="Contribution welcome">
     </a>
-    <a href="https://github.com/riipandi/otentik-authenticator-desktop">
-        <img src="https://img.shields.io/github/languages/top/riipandi/otentik-authenticator-desktop?style=flat-square" alt="Top language">
+    <a href="https://github.com/riipandi/otentik-authenticator-desktop/releases/tag/latest">
+        <img src="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/release.yml/badge.svg?branch=main" alt="Release Status">
     </a>
     <a href="https://choosealicense.com/licenses/apache-2.0">
         <img src="https://img.shields.io/github/license/riipandi/otentik-authenticator-desktop?style=flat-square" alt="License">
-    </a>
-    <a href="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/release.yml">
-        <img src="https://github.com/riipandi/otentik-authenticator-desktop/actions/workflows/release.yml/badge.svg?branch=main" alt="Release Status">
     </a>
     <a href="https://github.com/sponsors/riipandi">
         <img src="https://img.shields.io/static/v1?color=26B643&label=Sponsor&message=%E2%9D%A4&logo=GitHub&style=flat-square" alt="Sponsors">

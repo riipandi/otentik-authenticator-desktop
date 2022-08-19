@@ -11,9 +11,10 @@ import { useStores } from './stores/stores'
 function App() {
   const session = useAuth()
   const setFormCreateOpen = useStores((state) => state.setFormCreateOpen)
+  const setForceFetch = useStores((state) => state.setForceFetch)
 
-  // Keyboard shortcut for open debugging tools
-  // useHotkeys('cmd+alt+j', () => console.log('Open DevTools'))
+  // Register keyboard shortcuts
+  useHotkeys('ctrl+r, command+r', () => setForceFetch(true))
   useHotkeys('ctrl+n, command+n', () => setFormCreateOpen(true))
 
   useEffect(() => {

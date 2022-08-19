@@ -5,16 +5,20 @@ type FormCreateProps = {
   children: React.ReactNode
   className?: string
   isOpen: boolean
+  initialFocus?: React.MutableRefObject<HTMLElement | null> | undefined
 }
 
-export const DialogTransition: FC<FormCreateProps> = ({
-  children,
-  isOpen,
-  className,
-}) => {
+export const DialogTransition: FC<FormCreateProps> = (props) => {
+  const { children, isOpen, className, initialFocus } = props
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as='div' className='relative z-20' onClose={() => null}>
+      <Dialog
+        as='div'
+        className='relative z-20'
+        initialFocus={initialFocus}
+        onClose={() => null}
+      >
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
