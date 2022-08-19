@@ -76,6 +76,7 @@ For detailed explanation on how things work, check out [Supabase documentation](
 ## Roadmaps
 
 -   [ ] Account management
+-   [ ] Export & import collections
 -   [ ] Offline synchronization
 -   [ ] Create mobile version
 -   [ ] Create Windows version
