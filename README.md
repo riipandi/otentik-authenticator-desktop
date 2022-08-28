@@ -14,6 +14,10 @@
     </a>
 </p>
 
+> **Archived**
+>
+> This repository is archived, please go to https://github.com/otentikapp/clients for future development.
+
 ## Introduction
 
 Feeling bothered about having to switch devices when you want to enter an OTP code when logging into a website or service?
