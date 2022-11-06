@@ -16,7 +16,7 @@
 
 > **Archived**
 >
-> This repository is archived, please go to https://github.com/otentikapp/clients for future development.
+> This repository is archived, please go to https://github.com/otentikapp/authenticator for future development.
 
 ## Introduction
 
